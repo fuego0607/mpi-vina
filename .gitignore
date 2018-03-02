@@ -30,3 +30,6 @@
 
 # Debug files
 *.dSYM/
+
+*.o[0-9]*
+*.po[0-9]*

@@ -2,6 +2,8 @@
 *   Author    : Jeremy Hofer and Abhay Aradhya
 *   Purpose   : Python MPI based parallel version of Autodock Vina.
 '''
+from mpi4py import MPI
+from collections import deque
 
 #define MASTER                  0
 
@@ -18,160 +20,66 @@ COMPUTE_TAG = 11
 TERMINATE_TAG = 22
 WORK_REQ_TAG = 33
 
-void mpiVinaManager (int numProcs);
-void mpiVinaWorker (int workerId);
+def main():
+    numProcs = MPI.COMM_WORLD.Get_size()
+    rank = MPI.COMM_WORLD.Get_rank()
+    totalLigands = 0
+    queue = deque(None)
 
-MPI_Datatype MPI_LIGAND;
-LigandList lgndsList;
-
-int main(int argc, char *argv[])
-{
-    int numProcs, rank, totalLigands;
-    FILE *ligandListFile;
-    double startTime = 0.0, endTime = 0.0;
-
-    MPI_Init (&argc, &argv );
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	MPI_Comm_size(MPI_COMM_WORLD, &numProcs);
-
-    MPI_Type_contiguous(MAX_LIGAND_NAME_LENGTH, MPI_CHAR, &MPI_LIGAND);
-    MPI_Type_commit(&MPI_LIGAND);
-
-    // Only master processor will read the ligandlist file and will make the work pool.
-    if(rank == MASTER)
-    {
-        printf("Master processor : Reading ligandlist file and creating work pool.\n");
-        startTime = MPI_Wtime(); // start timer.
-        char ligandName[MAX_LIGAND_NAME_LENGTH];
-        ligandListFile = fopen(LIGAND_FILE_NAME , "r");
+    #Only master processor will read the ligandlist file and will make the work pool.
+    if rank == MASTER:
+        print "Master processor : Reading ligandlist file and creating work pool.\n"
+        startTime = MPI.Wtime(); #start timer.
+        #insert opening config files and reading in lists of receptors, ligands, etc.
+        '''
         if (NULL == ligandListFile)
         {
             printf("Couldn't open file %s for reading.\n", LIGAND_FILE_NAME);
             MPI_Abort(MPI_COMM_WORLD, 911); //Terminates MPI execution environment with error code 911.
             return 0;
         }
-        //Initialize ligand list.
-        InitLigandList(&lgndsList);
+        '''
 
-        while (fgets(ligandName, sizeof(ligandName), ligandListFile))
-        {
-            char *nlptr = strchr(ligandName, '\n');
-            if (nlptr)  // Remove ending new line from ligandName.
-                *nlptr = '\0';
-            //Add to the list.
-            InsertBack(&lgndsList, ligandName);
-        }
-        //Get total number of ligands.
-        totalLigands = length(&lgndsList);
-    }
+        #append items to the queue
 
-    if(rank == MASTER)
-    {
-        mpiVinaManager(numProcs);   // Master processor will play the role of mpiVINA manager.
-    }
-    else
-    {
-        mpiVinaWorker(rank);    // All other processors will play the role of mpiVINA worker.
-    }
+    if rank == MASTER:
+        mpiVinaManager(numProcs);   #Master processor will play the role of mpiVINA manager.
+    else:
+        mpiVinaWorker(rank);    #All other processors will play the role of mpiVINA worker.
 
-    if (rank == MASTER)
-    {
-        endTime = MPI_Wtime(); // end timer.
-        printf("\n\n..........................................\n"); 
-        printf("   Number of workers       = %d \n", numProcs - 1); 
-        printf("   Number of Lignds        = %u \n", totalLigands); 
-        printf("   Total time required     = %.2lf seconds.\n", endTime - startTime); 
-        printf("..........................................\n\n");
-		fflush(stdout);
+    if rank == MASTER:
+        endTime = MPI.Wtime(); #end timer.
+        print "\n\n..........................................\n" 
+        print "   Number of workers       = {0} \n".format(numProcs - 1)
+        print "   Number of Ligands        = {0} \n".format(totalLigands)
+        print "   Total time required     = {0} seconds.\n".format(endTime - startTime)
+        print "..........................................\n\n"
 
-        ClearLigandList(&lgndsList); //Clear memory occupied by ligandlist.
-    }
+def mpiVinaManager(numProcs):
+    while len(queue) > 0:
+        comm.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
+        comm.send(buf=queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
 
-    MPI_Type_free (&MPI_LIGAND);
-    MPI_Finalize ( );
-    return 0;
-}
-
-void mpiVinaManager(int numProcs)
-{
-    int i;
-    MPI_Status mStatus;
-    Ligand *currLigand = NULL;
-
-    currLigand = lgndsList.head;    //Begin with first ligand.
-
-    while (currLigand != NULL)
-    {
-        //Wait for receiving work item request from any worker.
-        MPI_Recv(NULL, 0, MPI_INT, MPI_ANY_SOURCE, WORK_REQ_TAG, MPI_COMM_WORLD, &mStatus);
-        //Assign an work item to the requested worker.
-        MPI_Send(currLigand->ligandName, 1, MPI_LIGAND, mStatus.MPI_SOURCE, COMPUTE_TAG, MPI_COMM_WORLD);
-
-        currLigand = currLigand->next;    //Go ahead of the list.
-    }
-
-    //Computation has done. Send termination tag to all the slaves.
-    for (i = 1; i < numProcs; i++)
-    {
-        MPI_Recv(NULL, 0, MPI_INT, MPI_ANY_SOURCE, WORK_REQ_TAG, MPI_COMM_WORLD, &mStatus);
-        MPI_Send(NULL, 0, MPI_INT, mStatus.MPI_SOURCE, TERMINATE_TAG, MPI_COMM_WORLD);
-    }
-    return;
-}
+    for i in range(numProcs):
+        comm.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
+        comm.send(buf=None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
 
 def mpiVinaWorker(workerID):
     print "Worker %d has started.\n".format(workerID)
 
-    comm.Send(None, 0, WORK_REQ_TAG)
-    comm.Recv(ligandName, 0, MPI.ANY_TAG, wStatus)
+    comm.send(None, dest=0, tag=WORK_REQ_TAG)
+    ligandName = comm.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 
-void mpiVinaWorker(int workerId)
-{
-    MPI_Status wStatus;
-    char lignadName[MAX_LIGAND_NAME_LENGTH];
+    while wStatus.Get_tag == COMPUTE_TAG:
+        print "Worker = {0} : ligand {1} is processing...\n".format(workerID, ligandName)
+        #insert vina command
+        comm.send(buf=None, dest=0, tag=WORK_REQ_TAG)
+        ligandName = comm.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 
-    printf("Worker %d has started.\n", workerId);
-	fflush(stdout);
-    //Initial request to manager for assigning work item.
-    MPI_Send(NULL, 0, MPI_INT, 0, WORK_REQ_TAG, MPI_COMM_WORLD);
-    MPI_Recv(lignadName, 1, MPI_LIGAND, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &wStatus);
+    if wStatus.Get_tag == TERMINATE_TAG:
+        print "Worker {0} has terminated.\n".format(workerID)
+    else:
+        print "Worker {0} has received invalid Tag\n".format(workerID)
 
-    while (wStatus.MPI_TAG == COMPUTE_TAG)
-    {
-        printf("Worker = %d : ligand '%s' is processing...\n", workerId, lignadName);
-		fflush(stdout);
-
-        char vinaCmd[500]="Vina/vina --config Vina/conf.txt --ligand ./Ligand/";
-        strcat(vinaCmd, lignadName);
-        strcat(vinaCmd, " --out Output/");
-        strcat(vinaCmd, lignadName);
-        strcat(vinaCmd, ".pdbqt --log Output/");
-        strcat(vinaCmd, lignadName);
-        strcat(vinaCmd, ".txt>/dev/null");
-        //Ask Autodock Vina to perform molecular docking.
-        system(vinaCmd);
-
-        vinaCmd[0] = '\0';
-        strcat(vinaCmd, "mv  Ligand/");
-        strcat(vinaCmd, lignadName);
-        strcat(vinaCmd, " ProcessedLigand/");
-        //Move processed ligands to ProcessedLigand directory.
-        system(vinaCmd);
-
-        //Request for another work item.
-        MPI_Send(NULL, 0, MPI_INT, 0, WORK_REQ_TAG, MPI_COMM_WORLD);
-        MPI_Recv(lignadName, 1, MPI_LIGAND, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &wStatus);
-    }
-
-    if (wStatus.MPI_TAG == TERMINATE_TAG)
-    {
-        printf("Worker %d has terminated.\n", workerId);
-		fflush(stdout);
-    }
-    else
-    {
-        printf("Worker %d has received invalid Tag\n", workerId);
-		fflush(stdout);
-    }
-    return;
-}
+if __name__ == '__main__':
+    main()
