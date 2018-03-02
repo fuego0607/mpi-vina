@@ -56,6 +56,7 @@ def main():
         print "..........................................\n\n"
 
 def mpiVinaManager(numProcs):
+    mStatus = MPI.Status()
     while len(queue) > 0:
         comm.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
         comm.send(buf=queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
@@ -66,6 +67,7 @@ def mpiVinaManager(numProcs):
 
 def mpiVinaWorker(workerID):
     print "Worker %d has started.\n".format(workerID)
+    wStatus = MPI.Status()
 
     comm.send(None, dest=0, tag=WORK_REQ_TAG)
     ligandName = comm.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
