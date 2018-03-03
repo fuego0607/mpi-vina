@@ -63,7 +63,7 @@ def mpiVinaManager(numProcs):
         print "Worker {0} requesting work\n".format(mStatus.Get_source())
         MPI.COMM_WORLD.send(queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
 
-    for i in range(numProcs):
+    for i in range(numProcs - 1):
         MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
         print "Sending termination to worker {0}\n".format(mStatus.Get_source())
         MPI.COMM_WORLD.send(None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
@@ -75,13 +75,13 @@ def mpiVinaWorker(workerID):
     MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
     ligandName = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 
-    while wStatus.Get_tag == COMPUTE_TAG:
+    while wStatus.Get_tag() == COMPUTE_TAG:
         print "Worker = {0} : ligand {1} is processing...\n".format(workerID, ligandName)
         #insert vina command
         MPI.COMM_WORLD.send(buf=None, dest=0, tag=WORK_REQ_TAG)
         ligandName = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 
-    if wStatus.Get_tag == TERMINATE_TAG:
+    if wStatus.Get_tag() == TERMINATE_TAG:
         print "Worker {0} has terminated.\n".format(workerID)
     else:
         print "Worker {0} has received invalid Tag\n".format(workerID)
