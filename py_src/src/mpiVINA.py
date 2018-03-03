@@ -78,7 +78,7 @@ def mpiVinaWorker(workerID):
     while wStatus.Get_tag() == COMPUTE_TAG:
         print "Worker = {0} : ligand {1} is processing...\n".format(workerID, ligandName)
         #insert vina command
-        MPI.COMM_WORLD.send(buf=None, dest=0, tag=WORK_REQ_TAG)
+        MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
         ligandName = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 
     if wStatus.Get_tag() == TERMINATE_TAG:
