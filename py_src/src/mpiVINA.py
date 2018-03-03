@@ -48,7 +48,7 @@ def main():
     else:
         mpiVinaWorker(rank);    #All other processors will play the role of mpiVINA worker.
 
-    MPI.COMM.Barrier()
+    MPI.COMM_WORLD.Barrier()
 
     if rank == MASTER:
         endTime = MPI.Wtime(); #end timer.
