@@ -24,7 +24,7 @@ def main():
     numProcs = MPI.COMM_WORLD.Get_size()
     rank = MPI.COMM_WORLD.Get_rank()
     totalLigands = 0
-    queue = deque(None)
+    queue = deque([])
 
     #Only master processor will read the ligandlist file and will make the work pool.
     if rank == MASTER:
@@ -58,25 +58,25 @@ def main():
 def mpiVinaManager(numProcs):
     mStatus = MPI.Status()
     while len(queue) > 0:
-        comm.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
-        comm.send(buf=queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
+        MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
+        MPI.COMM_WORLD.send(buf=queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
 
     for i in range(numProcs):
-        comm.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
-        comm.send(buf=None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
+        MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
+        MPI.COMM_WORLD.send(buf=None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
 
 def mpiVinaWorker(workerID):
-    print "Worker %d has started.\n".format(workerID)
+    print "Worker {0} has started.\n".format(workerID)
     wStatus = MPI.Status()
 
-    comm.send(None, dest=0, tag=WORK_REQ_TAG)
-    ligandName = comm.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
+    MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
+    ligandName = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 
     while wStatus.Get_tag == COMPUTE_TAG:
         print "Worker = {0} : ligand {1} is processing...\n".format(workerID, ligandName)
         #insert vina command
-        comm.send(buf=None, dest=0, tag=WORK_REQ_TAG)
-        ligandName = comm.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
+        MPI.COMM_WORLD.send(buf=None, dest=0, tag=WORK_REQ_TAG)
+        ligandName = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 
     if wStatus.Get_tag == TERMINATE_TAG:
         print "Worker {0} has terminated.\n".format(workerID)
