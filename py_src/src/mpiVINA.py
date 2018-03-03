@@ -61,12 +61,12 @@ def mpiVinaManager(numProcs):
     while len(queue) > 0:
         MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
         print "Worker {0} requesting work\n".format(mStatus.Get_source())
-        MPI.COMM_WORLD.send(buf=queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
+        MPI.COMM_WORLD.send(queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
 
     for i in range(numProcs):
         MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
         print "Sending termination to worker {0}\n".format(mStatus.Get_source())
-        MPI.COMM_WORLD.send(buf=None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
+        MPI.COMM_WORLD.send(None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
 
 def mpiVinaWorker(workerID):
     print "Worker {0} has started.\n".format(workerID)
