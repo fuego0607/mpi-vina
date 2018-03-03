@@ -19,12 +19,12 @@ MASTER = 0
 COMPUTE_TAG = 11
 TERMINATE_TAG = 22
 WORK_REQ_TAG = 33
+queue = deque([])
 
 def main():
     numProcs = MPI.COMM_WORLD.Get_size()
     rank = MPI.COMM_WORLD.Get_rank()
-    totalLigands = 0
-    queue = deque([])
+    totalLigands = 0    
 
     #Only master processor will read the ligandlist file and will make the work pool.
     if rank == MASTER:
@@ -41,6 +41,7 @@ def main():
         '''
 
         #append items to the queue
+        queue.append("test")
 
     if rank == MASTER:
         mpiVinaManager(numProcs);   #Master processor will play the role of mpiVINA manager.
@@ -59,10 +60,12 @@ def mpiVinaManager(numProcs):
     mStatus = MPI.Status()
     while len(queue) > 0:
         MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
+        print "Worker {0} requesting work\n".Get_source()
         MPI.COMM_WORLD.send(buf=queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
 
     for i in range(numProcs):
         MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
+        print "Sending termination to worker {0}\n".format(mStatus.Get_source())
         MPI.COMM_WORLD.send(buf=None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
 
 def mpiVinaWorker(workerID):
