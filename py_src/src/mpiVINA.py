@@ -60,7 +60,7 @@ def mpiVinaManager(numProcs):
     mStatus = MPI.Status()
     while len(queue) > 0:
         MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
-        print "Worker {0} requesting work\n".Get_source()
+        print "Worker {0} requesting work\n".format(mStatus.Get_source())
         MPI.COMM_WORLD.send(buf=queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
 
     for i in range(numProcs):
