@@ -24,7 +24,6 @@ queue = deque([])
 def main():
     numProcs = MPI.COMM_WORLD.Get_size()
     rank = MPI.COMM_WORLD.Get_rank()
-    totalLigands = 0    
 
     #Only master processor will read the ligandlist file and will make the work pool.
     if rank == MASTER:
@@ -41,9 +40,11 @@ def main():
         '''
 
         #append items to the queue
-        queue.append("test")
+        for i in range(15):
+            queue.append("test {0}".format(i))
 
     if rank == MASTER:
+        totalLigands = len(queue)
         mpiVinaManager(numProcs);   #Master processor will play the role of mpiVINA manager.
     else:
         mpiVinaWorker(rank);    #All other processors will play the role of mpiVINA worker.
