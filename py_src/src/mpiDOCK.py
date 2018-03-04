@@ -26,7 +26,7 @@ def main():
 
     #Only master processor will read the ligandlist file and will make the work pool.
     if rank == MASTER:
-        print "Master processor {0} initializing mpiDOCK.\n\n".format(MASTER)
+        print "Master processor initializing mpiDOCK.\n".format(MASTER)
         print "Reading configuration file...\n"
 
         configuration = {"vina": None, "vina_config": None, "run_vina": False, "receptors_dir": None, "ligands_dir": None, "job_name": None,
@@ -38,7 +38,7 @@ def main():
         except (FileNotFoundError, IOError) as e:
             abort_mpi("Cannot find or open the configuration file. Please make sure mpidock.config is in the same directory as mpiDOCK.py.")
         else:
-            lines = [x.split("=") for x in file.readlines() if x[0] is not "#"]
+            lines = [x.strip().split("=") for x in file.readlines() if x[0] is not "#"]
             if len(lines) is 0:
                 abort_mpi("Error reading configuration file.")
 
@@ -52,7 +52,9 @@ def main():
         print "Configuration read OK. Configured with the following:\n"
 
         for key, value in configuration.iteritems():
-            print "{0} : {1}".format(key, value)
+            print "{0} : {1}\n".format(key, value)
+
+        queue = deque([])
 
         #append items to the queue
         for i in range(15):
@@ -64,7 +66,7 @@ def main():
 
     if rank == MASTER:
         startTime = MPI.Wtime(); #start timer.
-        mpiVinaManager(numProcs);   #Master processor will play the role of mpiVINA manager.
+        mpiVinaManager(numProcs, queue);   #Master processor will play the role of mpiVINA manager.
     else:
         mpiVinaWorker(rank);    #All other processors will play the role of mpiVINA worker.
 
@@ -80,7 +82,7 @@ def main():
 
     MPI.Finalize()
 
-def mpiVinaManager(numProcs):
+def mpiVinaManager(numProcs, queue):
     mStatus = MPI.Status()
     while len(queue) > 0:
         MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
