@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Name the job sum 
-#$ -N helloworld 
+#$ -N docktest 
 #
 #$ -cwd
 #
@@ -18,4 +18,4 @@ source /usr/share/Modules/init/bash
 module load mvapich2-2.0/gcc-4.7.2
 
 # Run the mpi job
-/act/mvapich2-2.0/gcc-4.7.2/bin/mpiexec -np $NSLOTS python /home/hofer/mpi-vina/py_src/src/mpiVINA.py
+/act/mvapich2-2.0/gcc-4.7.2/bin/mpiexec -np $NSLOTS python /home/hofer/mpi-vina/py_src/src/mpiDOCK.py

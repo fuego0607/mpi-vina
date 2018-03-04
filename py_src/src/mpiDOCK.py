@@ -1,25 +1,24 @@
-''' File      : mpiVina.py
+''' File      : mpiDOCK.py
 *   Author    : Jeremy Hofer and Abhay Aradhya
-*   Purpose   : Python MPI based parallel version of Autodock Vina.
+*   Purpose   : Python MPI based parallel master/slave manager of Autodock Vina and various Vina rescoring functions
 '''
 from mpi4py import MPI
 from collections import deque
-
-#define MASTER                  0
-
-#define COMPUTE_TAG             11
-#define TERMINATE_TAG           22
-#define WORK_REQ_TAG            33
-
-#define MAX_LIGAND_NAME_LENGTH  25
-#define LIGAND_FILE_NAME        "ligandlist"
+from glob import glob
 
 MASTER = 0
 
 COMPUTE_TAG = 11
 TERMINATE_TAG = 22
 WORK_REQ_TAG = 33
-queue = deque([])
+
+config_file = "mpidock.config"
+
+def abort_mpi(error_message):
+    print error_message
+    print "\nTerminating mpiDOCK"
+    MPI.COMM_WORLD.Abort(911)
+    exit()
 
 def main():
     numProcs = MPI.COMM_WORLD.Get_size()
@@ -27,24 +26,44 @@ def main():
 
     #Only master processor will read the ligandlist file and will make the work pool.
     if rank == MASTER:
-        print "Master processor : Reading ligandlist file and creating work pool.\n"
-        startTime = MPI.Wtime(); #start timer.
-        #insert opening config files and reading in lists of receptors, ligands, etc.
-        '''
-        if (NULL == ligandListFile)
-        {
-            printf("Couldn't open file %s for reading.\n", LIGAND_FILE_NAME);
-            MPI_Abort(MPI_COMM_WORLD, 911); //Terminates MPI execution environment with error code 911.
-            return 0;
-        }
-        '''
+        print "Master processor {0} initializing mpiDOCK.\n\n".format(MASTER)
+        print "Reading configuration file...\n"
+
+        configuration = {"vina": None, "vina_config": None, "run_vina": False, "receptors_dir": None, "ligands_dir": None, "job_name": None,
+                         "ligand_db_name": None, "output_dir": None, "clean_temp_files": None}
+        
+        #try to open and read in configuration file. abort MPI if errors occur
+        try:
+            file = open(config_file, "r")
+        except (FileNotFoundError, IOError) as e:
+            abort_mpi("Cannot find or open the configuration file. Please make sure mpidock.config is in the same directory as mpiDOCK.py.")
+        else:
+            lines = [x.split("=") for x in file.readlines() if x[0] is not "#"]
+            if len(lines) is 0:
+                abort_mpi("Error reading configuration file.")
+
+            for line in lines:
+                if line[0] in configuration:
+                    configuration[line[0]] = line[1]
+                else:
+                    abort_mpi("Invalid key/variable {0} in configuration file. Please review valid keys/variables.")
+
+        #print configuration information
+        print "Configuration read OK. Configured with the following:\n"
+
+        for key, value in configuration.iteritems():
+            print "{0} : {1}".format(key, value)
 
         #append items to the queue
         for i in range(15):
             queue.append("test {0}".format(i))
 
-    if rank == MASTER:
         totalLigands = len(queue)
+
+    MPI.COMM_WORLD.Barrier()
+
+    if rank == MASTER:
+        startTime = MPI.Wtime(); #start timer.
         mpiVinaManager(numProcs);   #Master processor will play the role of mpiVINA manager.
     else:
         mpiVinaWorker(rank);    #All other processors will play the role of mpiVINA worker.
@@ -58,6 +77,8 @@ def main():
         print "   Number of Ligands        = {0} \n".format(totalLigands)
         print "   Total time required     = {0} seconds.\n".format(endTime - startTime)
         print "..........................................\n\n"
+
+    MPI.Finalize()
 
 def mpiVinaManager(numProcs):
     mStatus = MPI.Status()
