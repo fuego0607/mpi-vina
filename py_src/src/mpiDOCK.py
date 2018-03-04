@@ -16,18 +16,22 @@ config_file = "mpidock.config"
 
 def abort_mpi(error_message):
     print error_message
-    print "\nTerminating mpiDOCK"
+    print "Terminating mpiDOCK"
     MPI.COMM_WORLD.Abort(911)
     exit()
 
 def main():
     numProcs = MPI.COMM_WORLD.Get_size()
     rank = MPI.COMM_WORLD.Get_rank()
+    configuration = {}
+
+    if numProcs < 2:
+        abort_mpi("Not enough processors! You must use at least 2 processors.")
 
     #Only master processor will read the ligandlist file and will make the work pool.
     if rank == MASTER:
-        print "Master processor initializing mpiDOCK.\n".format(MASTER)
-        print "Reading configuration file...\n"
+        print "Master processor initializing mpiDOCK.".format(MASTER)
+        print "Reading configuration file..."
 
         configuration = {"vina": None, "vina_config": None, "run_vina": False, "receptors_dir": None, "ligands_dir": None, "job_name": None,
                          "ligand_db_name": None, "output_dir": None, "clean_temp_files": None}
@@ -38,22 +42,29 @@ def main():
         except (FileNotFoundError, IOError) as e:
             abort_mpi("Cannot find or open the configuration file. Please make sure mpidock.config is in the same directory as mpiDOCK.py.")
         else:
-            lines = [x.strip("\r\n").split("=") for x in file.readlines() if x[0] is not "#"]
+            lines = [x.strip().split("=") for x in file.readlines() if x[0] is not "#"]
             if len(lines) is 0:
                 abort_mpi("Error reading configuration file.")
 
             for line in lines:
                 if line[0] in configuration:
+                    if line[0] in ["run_vina", "clean_temp_files"]:
+                        if line[1] == "yes":
+                            line[1] = True
+                        else:
+                            line[1] = False
+
                     configuration[line[0]] = line[1]
                 else:
-                    abort_mpi("Invalid key/variable {0} in configuration file. Please review valid keys/variables.")
+                    abort_mpi("Invalid key/variable {0} in configuration file. Please review valid keys/variables and try again.")
 
         #print configuration information
-        print "Configuration read OK. Configured with the following:\n"
+        print "Configuration read OK. Configured with the following parameters:"
 
         for key, value in configuration.iteritems():
-            print "{0} : {1}\n".format(key, value)
+            print "{0} : {1}".format(key, value)
 
+        #initialize job queue
         queue = deque([])
 
         #append items to the queue
@@ -62,9 +73,10 @@ def main():
 
         totalLigands = len(queue)
 
-        print "STARTING JOB"
+        print "---- STARTING mpiDOCK ----"
 
     MPI.COMM_WORLD.Barrier()
+    MPI.COMM_WORLD.bcast(configuration, 0)
 
     if rank == MASTER:
         startTime = MPI.Wtime(); #start timer.
@@ -76,15 +88,16 @@ def main():
 
     if rank == MASTER:
         endTime = MPI.Wtime(); #end timer.
-        print "\n\n..........................................\n" 
-        print "   Number of workers       = {0} \n".format(numProcs - 1)
-        print "   Number of Ligands        = {0} \n".format(totalLigands)
-        print "   Total time required     = {0} seconds.\n".format(endTime - startTime)
-        print "..........................................\n\n"
+        print "\n.........................................." 
+        print "   Number of workers       = {0}".format(numProcs - 1)
+        print "   Number of Ligands        = {0}".format(totalLigands)
+        print "   Total time required     = {0} seconds.".format(endTime - startTime)
+        print ".........................................."
 
     MPI.Finalize()
 
 def mpiVinaManager(numProcs, queue):
+    print "Config in manager is {1}".format(workerID, configuration)
     mStatus = MPI.Status()
     while len(queue) > 0:
         MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
@@ -98,6 +111,7 @@ def mpiVinaManager(numProcs, queue):
 
 def mpiVinaWorker(workerID):
     print "Worker {0} has started.\n".format(workerID)
+    print "Config in worker {0} is {1}".format(workerID, configuration)
     wStatus = MPI.Status()
 
     MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
