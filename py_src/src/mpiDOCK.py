@@ -23,7 +23,6 @@ def abort_mpi(error_message):
 def main():
     numProcs = MPI.COMM_WORLD.Get_size()
     rank = MPI.COMM_WORLD.Get_rank()
-    configuration = {}
 
     if numProcs < 2:
         abort_mpi("Not enough processors! You must use at least 2 processors.")
@@ -56,7 +55,7 @@ def main():
 
                     configuration[line[0]] = line[1]
                 else:
-                    abort_mpi("Invalid key/variable {0} in configuration file. Please review valid keys/variables and try again.")
+                    abort_mpi("Invalid key/variable {0} in configuration file. Please review valid keys/variables and try again .")
 
         #print configuration information
         print "Configuration read OK. Configured with the following parameters:"
@@ -76,13 +75,12 @@ def main():
         print "---- STARTING mpiDOCK ----"
 
     MPI.COMM_WORLD.Barrier()
-    MPI.COMM_WORLD.bcast(configuration, 0)
 
     if rank == MASTER:
         startTime = MPI.Wtime(); #start timer.
-        mpiVinaManager(numProcs, queue);   #Master processor will play the role of mpiVINA manager.
+        mpiVinaManager(numProcs, queue, configuration);   #Master processor will play the role of mpiVINA manager.
     else:
-        mpiVinaWorker(rank);    #All other processors will play the role of mpiVINA worker.
+        mpiVinaWorker(rank, configuration);    #All other processors will play the role of mpiVINA worker.
 
     MPI.COMM_WORLD.Barrier()
 
@@ -96,8 +94,8 @@ def main():
 
     MPI.Finalize()
 
-def mpiVinaManager(numProcs, queue):
-    print "Config in manager is {1}".format(workerID, configuration)
+def mpiVinaManager(numProcs, queue, configuration):
+    print "Config in manager is {1}".format(configuration)
     mStatus = MPI.Status()
     while len(queue) > 0:
         MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
@@ -109,9 +107,8 @@ def mpiVinaManager(numProcs, queue):
         print "Sending termination to worker {0}\n".format(mStatus.Get_source())
         MPI.COMM_WORLD.send(None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
 
-def mpiVinaWorker(workerID):
+def mpiVinaWorker(workerID, configuration):
     print "Worker {0} has started.\n".format(workerID)
-    print "Config in worker {0} is {1}".format(workerID, configuration)
     wStatus = MPI.Status()
 
     MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
