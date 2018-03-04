@@ -38,7 +38,7 @@ def main():
         except (FileNotFoundError, IOError) as e:
             abort_mpi("Cannot find or open the configuration file. Please make sure mpidock.config is in the same directory as mpiDOCK.py.")
         else:
-            lines = [x.strip().split("=") for x in file.readlines() if x[0] is not "#"]
+            lines = [x.strip("\r\n").split("=") for x in file.readlines() if x[0] is not "#"]
             if len(lines) is 0:
                 abort_mpi("Error reading configuration file.")
 
@@ -61,6 +61,8 @@ def main():
             queue.append("test {0}".format(i))
 
         totalLigands = len(queue)
+
+        print "STARTING JOB"
 
     MPI.COMM_WORLD.Barrier()
 
