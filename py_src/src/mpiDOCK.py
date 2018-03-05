@@ -25,7 +25,7 @@ def abort_mpi(error_message):
 def main():
     numProcs = MPI.COMM_WORLD.Get_size()
     rank = MPI.COMM_WORLD.Get_rank()
-    configuration = {}
+    configuration = None
 
     if numProcs < 2:
         abort_mpi("Not enough processors! You must use at least 2 processors.")
@@ -36,7 +36,7 @@ def main():
         print "\nReading configuration file..."
 
         configuration = {"vina": None, "vina_config": None, "run_vina": False, "receptors_dir": None, "ligands_dir": None,
-                         "job_name": datetime.now().strftime("%Y-%m-%d_%H%M%S"), "ligand_db_name": None, "output_dir": None,
+                         "job_name": datetime.now().strftime("%Y-%m-%d_%H%M%S_%f"), "ligand_db_name": None, "output_dir": None,
                          "clean_temp_files": None}
         
         #try to open and read in configuration file. abort MPI if errors occur
@@ -108,7 +108,7 @@ def main():
 
         print "\n---- STARTING mpiDOCK job {0} ----".format(configuration['job_name'])
 
-    MPI.COMM_WORLD.bcast(configuration, 0)
+    configuration = MPI.COMM_WORLD.bcast(configuration, 0)
     MPI.COMM_WORLD.Barrier()
 
     if rank == MASTER:
