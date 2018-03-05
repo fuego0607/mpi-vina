@@ -5,6 +5,8 @@
 from mpi4py import MPI
 from collections import deque
 from glob import glob
+from os import system, access, X_OK
+from datetime import datetime
 
 MASTER = 0
 
@@ -16,8 +18,8 @@ config_file = "mpidock.config"
 
 def abort_mpi(error_message):
     print error_message
-    print "Terminating mpiDOCK"
-    MPI.COMM_WORLD.Abort(911)
+    print "\nTerminating mpiDOCK with error code 1."
+    MPI.COMM_WORLD.Abort(1)
     exit()
 
 def main():
@@ -30,10 +32,11 @@ def main():
     #Only master processor will read the ligandlist file and will make the work pool.
     if rank == MASTER:
         print "Master processor initializing mpiDOCK.".format(MASTER)
-        print "Reading configuration file..."
+        print "\nReading configuration file..."
 
-        configuration = {"vina": None, "vina_config": None, "run_vina": False, "receptors_dir": None, "ligands_dir": None, "job_name": None,
-                         "ligand_db_name": None, "output_dir": None, "clean_temp_files": None}
+        configuration = {"vina": None, "vina_config": None, "run_vina": False, "receptors_dir": None, "ligands_dir": None,
+                         "job_name": datetime.now().strftime("%Y-%m-%d_%H%M%S"), "ligand_db_name": None, "output_dir": None,
+                         "clean_temp_files": None}
         
         #try to open and read in configuration file. abort MPI if errors occur
         try:
@@ -43,7 +46,7 @@ def main():
         else:
             lines = [x.strip().split("=") for x in file.readlines() if x[0] is not "#"]
             if len(lines) is 0:
-                abort_mpi("Error reading configuration file.")
+                abort_mpi("Error reading configuration file. No configuration parameters seen. Make sure they are not commented out with '#'.")
 
             for line in lines:
                 if line[0] in configuration:
@@ -63,16 +66,46 @@ def main():
         for key, value in configuration.iteritems():
             print "{0} : {1}".format(key, value)
 
+        #perform checks to ensure all necessary files are present or will be present given the set of configured actions to perform (dock, rescore, etc.)
+        print "\nVerifying all required files are present..."
+
+        if configuration['run_vina']:
+            #check for vina executable
+            exe = access(configuration['vina'], X_OK)
+
+            if not exe:
+                abort_mpi("Issue validating Vina executable. File does not exist at location or does not have executable permissions.")
+
+            #check for configuration file
+            try:
+                open(configuration['vina_config'], "r")
+            except (FileNotFoundError, IOError) as e:
+                abort_mpi("Vina configuration file not found at given path or does not have read permissions.")
+
+            print "Vina files verified."
+
+        print "\nGenerating receptor and ligand pools..."
+        receptors = glob(configuration['receptors_dir']+"/*.pdbqt")
+        ligands = glob(configuration['ligands_dir']+"/*.pdbqt")
+        num_receptors = len(receptors)
+        num_ligands = len(ligands)
+
+        if len(receptors) is 0 or len(ligands) is 0:
+            abort_mpi("Cannot operate. {0} receptors found and {1} ligands found. Must have at least 1 receptor and 1 ligand.".format(num_receptors, num_ligands))
+        else:
+            print "{0} receptors found and {1} ligands found.".format(num_receptors, num_ligands)
+
         #initialize job queue
         queue = deque([])
 
         #append items to the queue
-        for i in range(15):
-            queue.append("test {0}".format(i))
+        for i in receptors:
+            for j in ligands:
+                queue.append({"receptor": i, "ligand": j})
 
-        totalLigands = len(queue)
+        total_jobs = len(queue)
 
-        print "---- STARTING mpiDOCK ----"
+        print "\n---- STARTING mpiDOCK job {0} ----".format(configuration['job_name'])
 
     MPI.COMM_WORLD.Barrier()
 
@@ -88,7 +121,7 @@ def main():
         endTime = MPI.Wtime(); #end timer.
         print "\n.........................................." 
         print "   Number of workers       = {0}".format(numProcs - 1)
-        print "   Number of Ligands        = {0}".format(totalLigands)
+        print "   Number of dockings        = {0}".format(total_jobs)
         print "   Total time required     = {0} seconds.".format(endTime - startTime)
         print ".........................................."
 
@@ -112,10 +145,10 @@ def mpiVinaWorker(workerID, configuration):
     wStatus = MPI.Status()
 
     MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
-    ligandName = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
+    job_info = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 
     while wStatus.Get_tag() == COMPUTE_TAG:
-        print "Worker = {0} : ligand {1} is processing...\n".format(workerID, ligandName)
+        print "Worker = {0} : receptor {1} ligand {2} is processing...\n".format(workerID, job_info['receptor'], job_info['ligand'])
         #insert vina command
         MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
         ligandName = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
