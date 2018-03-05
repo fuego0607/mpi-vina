@@ -130,7 +130,7 @@ def main():
     MPI.Finalize()
 
 def mpiVinaManager(numProcs, queue, configuration):
-    print "Config in manager is {1}".format(configuration)
+    print "Config in manager is {0}".format(configuration)
     mStatus = MPI.Status()
     while len(queue) > 0:
         MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
@@ -144,6 +144,7 @@ def mpiVinaManager(numProcs, queue, configuration):
 
 def mpiVinaWorker(workerID, configuration):
     print "Worker {0} has started.\n".format(workerID)
+    print "Config in worker {0} is {1}".format(workerID, configuration)
     wStatus = MPI.Status()
 
     MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
