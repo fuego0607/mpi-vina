@@ -25,6 +25,7 @@ def abort_mpi(error_message):
 def main():
     numProcs = MPI.COMM_WORLD.Get_size()
     rank = MPI.COMM_WORLD.Get_rank()
+    configuration = {}
 
     if numProcs < 2:
         abort_mpi("Not enough processors! You must use at least 2 processors.")
@@ -41,7 +42,7 @@ def main():
         #try to open and read in configuration file. abort MPI if errors occur
         try:
             file = open(config_file, "r")
-        except (FileNotFoundError, IOError) as e:
+        except IOError as e:
             abort_mpi("Cannot find or open the configuration file. Please make sure mpidock.config is in the same directory as mpiDOCK.py.")
         else:
             lines = [x.strip().split("=") for x in file.readlines() if x[0] is not "#"]
@@ -79,7 +80,7 @@ def main():
             #check for configuration file
             try:
                 open(configuration['vina_config'], "r")
-            except (FileNotFoundError, IOError) as e:
+            except IOError as e:
                 abort_mpi("Vina configuration file not found at given path or does not have read permissions.")
 
             print "Vina files verified."
@@ -107,6 +108,7 @@ def main():
 
         print "\n---- STARTING mpiDOCK job {0} ----".format(configuration['job_name'])
 
+    MPI.COMM_WORLD.bcast(configuration, 0)
     MPI.COMM_WORLD.Barrier()
 
     if rank == MASTER:
