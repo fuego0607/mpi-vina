@@ -1,0 +1,115 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<title>User manual for X-Score: Introduction</title>
+</head>
+
+<body background="background.gif" bgcolor="#C0C0C0">
+
+<p align="center"><img src="title.gif" width="480" height="160"></p>
+
+<p align="center"><font size="5"><strong>What is X-Score?</strong></font></p>
+
+<hr size="3">
+
+<p align="justify">The X-Score program is developed by <font color="#000000">Dr. Renxiao Wang</font> 
+in Dr. Shaomeng Wang's group at the Department of Internal Medicine, University 
+of Michigan Medical School.&nbsp;Here the prefix &quot;X&quot; indicates that it is 
+integrated in the 
+computer-aided drug design toolkit, X-Tool, which is being developed by Dr. Renxiao Wang.  </p>
+
+<p>X-Score is a &quot;scoring function&quot;, which has its major applications to 
+structure-based drug design studies. It computes a binding score for a given 
+protein-ligand complex structure, and this binding score correlates to 
+experimental binding constants well. Three individual empirical scoring functions have been implemented
+in this program, which are named as <b><font color="#0000FF">HPScore</font></b>,
+<font color="#0000FF"><b>HMScore</b></font>, and <font color="#0000FF"> <b>HSScore, </b></font>
+respectively. They can be conceptually written as:</p>
+
+<p> <font color="#0000FF"> <strong>HPScore</strong> </font>= C<sub>0,1</sub> + C<sub>VDW,1</sub>*(VDW) + 
+C<sub>HB,1</sub>*(H-Bond) + C<sub>HP</sub>*(Hydrophobic Pair) + C<sub>RT,1</sub>*(Rotor)</p>
+
+<p> <strong><font color="#0000FF">HMScore</font></strong> = C<sub>0,2</sub> + C<sub>VDW,2</sub>*(VDW) + 
+C<sub>HB,2</sub>*(H-Bond) + C<sub>HM</sub>*(Hydrophobic
+Match) + C<sub>RT,2</sub>*(Rotor)</p>
+
+<p> <font color="#0000FF"><strong>HSScore</strong></font> = C<sub>0,3</sub> + C<sub>VDW,3</sub>*(VDW) + 
+C<sub>HB,3</sub>*(H-Bond) + C<sub>HS</sub>*(Hydrophobic
+surface) + C<sub>RT,3</sub>*(Rotor)</p>
+
+<p>By default, the final results:
+<font color="#0000FF"> <strong>
+X-Score</strong></font><strong style="font-weight: 400"> = (</strong><strong><font color="#0000FF">HP</font></strong><font color="#0000FF"><strong>Score</strong></font><strong style="font-weight: 400"> + </strong>
+<strong><font color="#0000FF">HMScore</font></strong><strong style="font-weight: 400"> + </strong>
+<strong><font color="#0000FF">HS</font></strong><font color="#0000FF"><strong>Score</strong></font><strong style="font-weight: 400">) / 3. 
+However, the users are allowed to choose any combination of the above three 
+scoring functions to meet their own interests.</strong></p>
+
+<p><strong style="font-weight: 400">All of these scoring functions  </strong>
+<span style="font-weight: 400"><strong>w</strong>ere originally</span> 
+calibrated with a set of 200 diverse protein-ligand complexes, and 
+they were able to reproduce the binding constants of the entire set 
+with an average accuracy of 1.5 log units (corresponding to ~ 2 kcal/mol 
+in terms of binding free energy). For more detailed description of X-Score, 
+please check the reference given below.</p>
+
+<p align="justify">Since X-Score does not perform molecular docking by itself, 
+it is typically applied in combination with a molecular 
+docking program, such as DOCK, AutoDock, FlexX or GOLD, in structure-base drug 
+design studies. The molecular docking program is used to provide the binding 
+models of the molecules of interests to their target protein. Then, X-Score can 
+be applied to re-rank them and give more accurate estimation of the binding free 
+energies of these molecules.</p>
+
+<p>The correct way to refer this program is X-Score.&nbsp;Note that X-Score was formerly known as X-CScore 
+for a short while. Please stop using the name of X-CScore to avoid further 
+confusion. The following reference is supposed to be cited in any resulting 
+publication by applying X-Score:</p>
+
+<p> <font color="#0000FF"><a href="xscore.pdf">Wang, R.; Lai, L.; Wang, S. 
+<em style="font-style: normal">Further 
+Development and Validation of Empirical Scoring Functions for Structure-Based 
+Binding Affinity Prediction. </em> <em>J. Comput.-Aided Mol. Des.</em><em style="font-style: normal">
+<b>2002</b>, </em> <em>16</em><em style="font-style: normal">, 11-26.</em></a></font></p>
+
+<hr>
+
+<h1 align="center"><font size="5"><strong>What is new in X-Score v1.2?</strong></font></h1>
+
+<p>Compared to the previous version, X-Score version 1.2 has substantial improvements in 
+many aspects:</p>
+<ol>
+  <li>All of the three scoring functions implemented in X-Score have been 
+  re-calibrated with a large training set of 800 protein-ligand complexes. 
+  X-Score v1.2 is thus applicable to a wider range of biomolecular systems and gives 
+  more robust results. </li>
+  <li>Users have greater controls now on the scoring functions used in 
+  computation. They are allowed to adjust the coefficients 
+  before each term in the scoring functions to emphasize  or underscore certain 
+  type of interactions between the protein and the ligand molecules if this is 
+  necessary for the success of their projects.</li>
+  <li>More detailed outputs are available, which tabulate the role 
+  of each atom in binding score computation. This 
+  information  helps users to analyze the structure-affinity relationship of the 
+  ligand molecules under study in a more transparent manner.</li>
+  <li>New utilities have been added to aid users to prepare the input structures more conveniently and more accurately.</li>
+  <li>Some bugs found in the previous version have been fixed. Many parts of the 
+  program have been optimized to give better performance. </li>
+  <li>The user manual has  been largely rewritten to reflect the many changes in 
+  version 1.2. New examples have been provided in the X-Score package for users to practice 
+  with this program.</li>
+</ol>
+
+<hr size="3">
+
+<p align="center"><a href="index.html"><font size="3">[Content]</font></a><font
+color="#400040" size="3"> </font><font color="#000000" size="3">[Introduction]</font><font
+size="3"> </font><a href="download.html"><font size="3">[Download]</font></a><font
+size="3"> <a href="install.html">[Installation]</a> </font><a href="usage.html"><font size="3">[Usage]</font></a><font
+size="3"> <a href="utility.html">[Utilities]</a> <a href="trouble.html">[Trouble
+Shooting]</a> <a href="refs.html">[References]</a></font></p>
+</body>
+</html>

@@ -1,0 +1,108 @@
+#	Name:			3tmn_ligand
+#	Creating user name:	arthur
+#	Creation time:		Thu Apr 15 09:53:52 1999
+
+#	Modifying user name:	arthur
+#	Modification time:	Thu Apr 15 09:53:53 1999
+
+@<TRIPOS>MOLECULE
+3tmn_ligand
+   43    44     2     0     0
+PROTEIN
+MMFF94_CHARGES
+
+
+@<TRIPOS>DICT
+PROTEIN PROTEIN
+@<TRIPOS>ATOM
+      1 N          51.5580   18.5010   -3.8590 N.4       1 VAL1       -0.8530 BACKBONE|DICT|DIRECT
+      2 CA         52.9320   18.3990   -3.3070 C.3       1 VAL1        0.5640 BACKBONE|DICT|DIRECT
+      3 C          53.7540   17.1150   -3.5810 C.2       1 VAL1        0.5690 BACKBONE|DICT|DIRECT
+      4 O          54.9850   17.1040   -3.5710 O.2       1 VAL1       -0.5700 BACKBONE|DICT|DIRECT
+      5 CB         53.1450   18.9100   -1.8860 C.3       1 VAL1        0.0000 DICT
+      6 CG1        52.5560   17.9820   -0.8190 C.3       1 VAL1        0.0000 DICT
+      7 CG2        54.6140   19.3280   -1.6460 C.3       1 VAL1        0.0000 DICT
+      8 N          53.0500   16.0150   -3.8250 N.am      2 TRP2       -0.7301 BACKBONE|DICT|DIRECT
+      9 CA         53.6750   14.7290   -4.1300 C.3       2 TRP2        0.1941 BACKBONE|DICT|DIRECT
+     10 C          52.8080   13.9510   -5.1010 C.2       2 TRP2        0.9060 BACKBONE|DICT|DIRECT
+     11 O          51.6670   14.4380   -5.3950 O.co2     2 TRP2       -0.9000 BACKBONE|DICT|DIRECT
+     12 CB         54.0940   13.9270   -2.9060 C.3       2 TRP2        0.1810 DICT
+     13 CG         52.8980   13.4510   -2.2090 C.2       2 TRP2       -0.1810 DICT
+     14 CD1        52.1710   14.1770   -1.3400 C.2       2 TRP2       -0.3016 DICT
+     15 CD2        52.2840   12.1730   -2.3080 C.ar      2 TRP2        0.0000 DICT
+     16 NE1        51.1220   13.4150   -0.8810 N.pl3     2 TRP2        0.0332 DICT
+     17 CE2        51.1510   12.1940   -1.4710 C.ar      2 TRP2       -0.1516 DICT
+     18 CE3        52.5600   11.0070   -3.0360 C.ar      2 TRP2       -0.1500 DICT
+     19 CZ2        50.2980   11.0890   -1.3330 C.ar      2 TRP2       -0.1500 DICT
+     20 CZ3        51.7280    9.9040   -2.9130 C.ar      2 TRP2       -0.1500 DICT
+     21 CH2        50.6060    9.9650   -2.0750 C.ar      2 TRP2       -0.1500 DICT
+     22 OXT        53.3210   12.9230   -5.6050 O.co2     2 TRP2       -0.9000 CAP|DICT
+     23 H          51.2507   17.5913   -4.1656 H         1 VAL1        0.4500 BACKBONE|DICT|ESSENTIAL|DIRECT
+     24 HA         53.4621   19.1483   -3.9132 H         1 VAL1        0.0000 BACKBONE|DICT|DIRECT
+     25 HB         52.5610   19.8392   -1.8119 H         1 VAL1        0.0000 DICT
+     26 HG13       51.4706   17.8900   -0.9718 H         1 VAL1        0.0000 DICT
+     27 HG12       52.7515   18.4004    0.1793 H         1 VAL1        0.0000 DICT
+     28 HG11       53.0229   16.9892   -0.8983 H         1 VAL1        0.0000 DICT
+     29 HG23       55.2716   18.4590   -1.7958 H         1 VAL1        0.0000 DICT
+     30 HG22       54.7261   19.6995   -0.6167 H         1 VAL1        0.0000 DICT
+     31 HG21       54.8896   20.1228   -2.3547 H         1 VAL1        0.0000 DICT
+     32 H          52.0518   16.0689   -3.7990 H         2 TRP2        0.3700 BACKBONE|DICT|ESSENTIAL|DIRECT
+     33 HA         54.6086   14.9597   -4.6640 H         2 TRP2        0.0000 BACKBONE|DICT|DIRECT
+     34 HB2        54.6828   14.5660   -2.2315 H         2 TRP2        0.0000 DICT
+     35 HB1        54.7031   13.0668   -3.2207 H         2 TRP2        0.0000 DICT
+     36 HD1        52.3800   15.2047   -1.0467 H         2 TRP2        0.1500 DICT
+     37 HE1        50.4205   13.7247   -0.1933 H         2 TRP2        0.2700 DICT|ESSENTIAL
+     38 HE3        53.4212   10.9676   -3.6932 H         2 TRP2        0.1500 DICT
+     39 HZ2        49.4371   11.1157   -0.6748 H         2 TRP2        0.1500 DICT
+     40 HZ3        51.9451    8.9962   -3.4641 H         2 TRP2        0.1500 DICT
+     41 HH2        49.9569    9.0995   -2.0067 H         2 TRP2        0.1500 DICT
+     42 ****       51.5563   19.1373   -4.6408 H         1 VAL1        0.4500 
+     43 ****       50.9338   18.8436   -3.1455 H         1 VAL1        0.4500 
+@<TRIPOS>BOND
+     1    2    1 1    BACKBONE|DICT
+     2    2    5 1    DICT
+     3    2    3 1    BACKBONE|DICT
+     4    3    4 2    BACKBONE|DICT
+     5    5    7 1    DICT
+     6    5    6 1    DICT
+     7    9    8 1    BACKBONE|DICT
+     8    9   12 1    DICT
+     9    9   10 1    BACKBONE|DICT
+    10   10   11 ar   BACKBONE|DICT
+    11   10   22 ar   CAP|DICT
+    12   12   13 1    DICT
+    13   13   14 2    DICT
+    14   13   15 1    DICT
+    15   15   18 ar   DICT
+    16   15   17 ar   DICT
+    17   17   19 ar   DICT
+    18   17   16 1    DICT
+    19   16   14 1    DICT
+    20   19   21 ar   DICT
+    21   21   20 ar   DICT
+    22   20   18 ar   DICT
+    23    3    8 am   BACKBONE|DICT|INTERRES
+    24    1   23 1    BACKBONE|DICT
+    25    2   24 1    BACKBONE|DICT
+    26    5   25 1    DICT
+    27    6   26 1    DICT
+    28    6   27 1    DICT
+    29    6   28 1    DICT
+    30    7   29 1    DICT
+    31    7   30 1    DICT
+    32    7   31 1    DICT
+    33    8   32 1    BACKBONE|DICT
+    34    9   33 1    BACKBONE|DICT
+    35   12   34 1    DICT
+    36   12   35 1    DICT
+    37   14   36 1    DICT
+    38   16   37 1    DICT
+    39   18   38 1    DICT
+    40   19   39 1    DICT
+    41   20   40 1    DICT
+    42   21   41 1    DICT
+    43    1   42 1    
+    44    1   43 1    
+@<TRIPOS>SUBSTRUCTURE
+     1 VAL1        2 RESIDUE           1 I     VAL     1 ROOT 
+     2 TRP2        9 RESIDUE           1 I     TRP     1  

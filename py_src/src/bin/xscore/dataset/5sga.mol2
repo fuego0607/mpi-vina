@@ -1,0 +1,163 @@
+#	Name:			5sga_ligand
+#	Creating user name:	arthur
+#	Creation time:		Thu Apr 15 09:54:32 1999
+
+#	Modifying user name:	arthur
+#	Modification time:	Thu Apr 15 09:54:33 1999
+
+@<TRIPOS>MOLECULE
+5sga_ligand
+   66    68     5     0     2
+PROTEIN
+MMFF94_CHARGES
+
+
+@<TRIPOS>DICT
+PROTEIN PROTEIN
+@<TRIPOS>ATOM
+      1 HA        -20.9593   25.8405   20.5884 H         2 PRO4        0.0000 BACKBONE|DICT|DIRECT
+      2 HB2       -20.3469   25.7627   18.3364 H         2 PRO4        0.0000 DICT
+      3 HB1       -18.7334   26.0901   19.0545 H         2 PRO4        0.0000 DICT
+      4 HG1       -18.8469   28.4048   18.5695 H         2 PRO4        0.0000 DICT
+      5 HG2       -19.7150   27.7159   17.1559 H         2 PRO4        0.0000 DICT
+      6 HD1       -20.8635   29.5995   18.8540 H         2 PRO4        0.0000 DICT
+      7 HD2       -21.8323   28.3654   17.9795 H         2 PRO4        0.0000 DICT
+      8 H         -19.2649   25.2014   21.8179 H         3 ALA3        0.3700 BACKBONE|DICT|ESSENTIAL|DIRECT
+      9 HA        -17.5454   27.2559   23.1349 H         3 ALA3        0.0000 BACKBONE|DICT|DIRECT
+     10 HB3       -19.3974   25.2982   24.6147 H         3 ALA3        0.0000 DICT
+     11 HB2       -19.6133   27.0793   24.5272 H         3 ALA3        0.0000 DICT
+     12 HB1       -18.1930   26.3878   25.3822 H         3 ALA3        0.0000 DICT
+     13 HA        -14.6737   23.9914   22.9521 H         4 PRO2        0.0000 BACKBONE|DICT|DIRECT
+     14 HB2       -12.8055   25.0722   23.6487 H         4 PRO2        0.0000 DICT
+     15 HB1       -13.2828   24.8298   25.3633 H         4 PRO2        0.0000 DICT
+     16 HG1       -13.6330   27.0771   25.4347 H         4 PRO2        0.0000 DICT
+     17 HG2       -13.5524   27.2209   23.6460 H         4 PRO2        0.0000 DICT
+     18 HD1       -15.9438   26.8859   25.4273 H         4 PRO2        0.0000 DICT
+     19 HD2       -15.8344   27.5881   23.7776 H         4 PRO2        0.0000 DICT
+     20 H         -14.7220   21.9063   23.6786 H         5 TYR1        0.3700 BACKBONE|DICT|ESSENTIAL|DIRECT
+     21 HA        -16.2273   21.4936   26.2364 H         5 TYR1        0.0000 BACKBONE|DICT|DIRECT
+     22 HB1       -16.1708   19.0827   25.4928 H         5 TYR1        0.0000 DICT
+     23 HB2       -15.4514   19.6771   23.9580 H         5 TYR1        0.0000 DICT
+     24 HD1       -18.0466   21.6929   25.6972 H         5 TYR1        0.1500 DICT
+     25 HD2       -17.2468   18.7188   22.7201 H         5 TYR1        0.1500 DICT
+     26 HE1       -20.3225   22.0539   24.7332 H         5 TYR1        0.1500 DICT
+     27 HE2       -19.5059   19.0718   21.7532 H         5 TYR1        0.1500 DICT
+     28 HH        -21.8010   21.3433   23.0953 H         5 TYR1        0.4500 DICT|ESSENTIAL
+     29 H1        -22.9813   29.5816   19.5026 H         1 ACE5        0.0000 
+     30 H2        -23.1182   30.1080   21.2145 H         1 ACE5        0.0000 
+     31 H3        -24.2301   28.8535   20.5688 H         1 ACE5        0.0000 
+     32 C         -22.2340   28.1820   20.9350 C.2       1 ACE5        0.5690 BACKBONE|DICT|DIRECT
+     33 O         -22.2780   27.6440   22.0560 O.2       1 ACE5       -0.5700 BACKBONE|DICT|DIRECT
+     34 CH3       -23.2060   29.2530   20.5280 C.3       1 ACE5        0.0610 
+     35 N         -21.3290   27.8500   19.9940 N.am      2 PRO4       -0.6602 BACKBONE|DICT|DIRECT
+     36 CA        -20.4070   26.7380   20.2730 C.3       2 PRO4        0.3611 BACKBONE|DICT|DIRECT
+     37 C         -19.4830   27.1430   21.3940 C.2       2 PRO4        0.5690 BACKBONE|DICT|DIRECT
+     38 O         -19.2240   28.3620   21.6610 O.2       2 PRO4       -0.5700 BACKBONE|DICT|DIRECT
+     39 CB        -19.7540   26.4790   18.9240 C.3       2 PRO4        0.0000 DICT
+     40 CG        -19.7280   27.8290   18.2500 C.3       2 PRO4        0.0000 DICT
+     41 CD        -21.0230   28.5210   18.7080 C.3       2 PRO4        0.3001 DICT
+     42 N         -18.9970   26.1280   22.0820 N.am      3 ALA3       -0.7301 BACKBONE|DICT|DIRECT
+     43 CA        -18.0750   26.2960   23.2250 C.3       3 ALA3        0.3611 BACKBONE|DICT|DIRECT
+     44 C         -17.0730   25.1560   23.2480 C.2       3 ALA3        0.5690 BACKBONE|DICT|DIRECT
+     45 O         -17.3630   24.0330   22.7670 O.2       3 ALA3       -0.5700 BACKBONE|DICT|DIRECT
+     46 CB        -18.8760   26.2630   24.5290 C.3       3 ALA3        0.0000 DICT
+     47 N         -15.9170   25.4570   23.8430 N.am      4 PRO2       -0.6602 BACKBONE|DICT|DIRECT
+     48 CA        -14.8550   24.4570   23.9320 C.3       4 PRO2        0.3611 BACKBONE|DICT|DIRECT
+     49 C         -15.2970   23.3960   24.9200 C.2       4 PRO2        0.5690 BACKBONE|DICT|DIRECT
+     50 O         -15.8400   23.7690   26.0030 O.2       4 PRO2       -0.5700 BACKBONE|DICT|DIRECT
+     51 CB        -13.6140   25.2030   24.3830 C.3       4 PRO2        0.0000 DICT
+     52 CG        -13.9950   26.6610   24.4830 C.3       4 PRO2        0.0000 DICT
+     53 CD        -15.5170   26.7550   24.4220 C.3       4 PRO2        0.3001 DICT
+     54 N         -15.1050   22.1410   24.5720 N.am      5 TYR1       -0.7301 BACKBONE|DICT|DIRECT
+     55 CA        -15.4740   21.0880   25.5450 C.3       5 TYR1        0.1941 BACKBONE|DICT|DIRECT
+     56 C         -14.2210   20.7060   26.3850 C.2       5 TYR1        0.9060 BACKBONE|DICT|DIRECT
+     57 O         -14.2230   19.5250   26.8890 O.co2     5 TYR1       -0.9000 BACKBONE|DICT|DIRECT
+     58 CB        -16.1060   19.9370   24.8030 C.3       5 TYR1        0.1435 DICT
+     59 CG        -17.4850   20.2010   24.2590 C.ar      5 TYR1       -0.1435 DICT
+     60 CD1       -18.3610   21.1220   24.8310 C.ar      5 TYR1       -0.1500 DICT
+     61 CD2       -17.9120   19.4530   23.1600 C.ar      5 TYR1       -0.1500 DICT
+     62 CE1       -19.6540   21.3210   24.2960 C.ar      5 TYR1       -0.1500 DICT
+     63 CE2       -19.1900   19.6410   22.6200 C.ar      5 TYR1       -0.1500 DICT
+     64 CZ        -20.0550   20.5680   23.2070 C.ar      5 TYR1        0.0825 DICT
+     65 OH        -21.2940   20.6920   22.6250 O.3       5 TYR1       -0.5325 DICT
+     66 OXT       -13.3160   21.5400   26.8150 O.co2     5 TYR1       -0.9000 CAP|DICT
+@<TRIPOS>BOND
+     1   36    1 1    BACKBONE|DICT
+     2   39    2 1    DICT
+     3   39    3 1    DICT
+     4   40    4 1    DICT
+     5   40    5 1    DICT
+     6   41    6 1    DICT
+     7   41    7 1    DICT
+     8   42    8 1    BACKBONE|DICT
+     9   43    9 1    BACKBONE|DICT
+    10   46   10 1    DICT
+    11   46   11 1    DICT
+    12   46   12 1    DICT
+    13   48   13 1    BACKBONE|DICT
+    14   51   14 1    DICT
+    15   51   15 1    DICT
+    16   52   16 1    DICT
+    17   52   17 1    DICT
+    18   53   18 1    DICT
+    19   53   19 1    DICT
+    20   54   20 1    BACKBONE|DICT
+    21   55   21 1    BACKBONE|DICT
+    22   58   22 1    DICT
+    23   58   23 1    DICT
+    24   60   24 1    DICT
+    25   61   25 1    DICT
+    26   62   26 1    DICT
+    27   63   27 1    DICT
+    28   65   28 1    DICT
+    29   34   29 1    
+    30   34   30 1    
+    31   34   31 1    
+    32   33   32 2    BACKBONE|DICT
+    33   32   34 1    
+    34   36   37 1    BACKBONE|DICT
+    35   36   39 1    DICT
+    36   36   35 1    BACKBONE|DICT
+    37   35   41 1    DICT
+    38   41   40 1    DICT
+    39   40   39 1    DICT
+    40   37   38 2    BACKBONE|DICT
+    41   32   35 am   BACKBONE|DICT|INTERRES
+    42   43   42 1    BACKBONE|DICT
+    43   43   46 1    DICT
+    44   43   44 1    BACKBONE|DICT
+    45   44   45 2    BACKBONE|DICT
+    46   37   42 am   BACKBONE|DICT|INTERRES
+    47   48   49 1    BACKBONE|DICT
+    48   48   51 1    DICT
+    49   48   47 1    BACKBONE|DICT
+    50   47   53 1    DICT
+    51   53   52 1    DICT
+    52   52   51 1    DICT
+    53   49   50 2    BACKBONE|DICT
+    54   44   47 am   BACKBONE|DICT|INTERRES
+    55   55   54 1    BACKBONE|DICT
+    56   55   58 1    DICT
+    57   55   56 1    BACKBONE|DICT
+    58   56   57 ar   BACKBONE|DICT
+    59   56   66 ar   CAP|DICT
+    60   58   59 1    DICT
+    61   59   60 ar   DICT
+    62   59   61 ar   DICT
+    63   61   63 ar   DICT
+    64   63   64 ar   DICT
+    65   64   65 1    DICT
+    66   64   62 ar   DICT
+    67   62   60 ar   DICT
+    68   49   54 am   BACKBONE|DICT|INTERRES
+@<TRIPOS>SUBSTRUCTURE
+     1 ACE5       33 RESIDUE           1 P     ACE     1 ROOT|BLOCK 
+     2 PRO4       36 RESIDUE           1 P     PRO     2  
+     3 ALA3       43 RESIDUE           1 P     ALA     2  
+     4 PRO2       48 RESIDUE           1 P     PRO     2  
+     5 TYR1       55 RESIDUE           1 P     TYR     1  
+@<TRIPOS>SET
+UNK_ATOMS       STATIC     ATOMS    AMSOM    **** Atom types guessed for these atoms
+1 34
+ATOM$BLUE       STATIC     ATOMS    COLORGROUP SYSTEM 
+0

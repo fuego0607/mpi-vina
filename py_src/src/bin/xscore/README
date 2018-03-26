@@ -1,0 +1,47 @@
+
+-------------------------------------------------------------------------------
+Under this directory,
+
+"bin/":       the executable binary code
+"c++/":       source codes in C++ 
+"example/":   some examples for users' practice
+"manual/":    user manual in HTML
+"parameter/": parameter files
+"dataset/":   the original dataset for developing X-Score v1.0 (230 complexes) 
+
+Please read the instructions under the directory "manual" to learn 
+how to install and use this program. The entrance page is "index.html". 
+
+-------------------------------------------------------------------------------
+
+New features in X-Score v1.2:
+
+Compared to the previous version, X-Score version 1.2 has substantial improvements in many aspects:
+
+1. All of the three scoring functions implemented in X-Score have been re-calibrated with a large training set of 800 protein-ligand complexes. X-Score v1.2 is thus applicable to a wider range of biomolecular systems and gives more robust results. 
+
+2. Users have greater controls now on the scoring functions used in computation. They are allowed to adjust the coefficients before each term in the scoring functions to emphasize or underscore certain type of interactions between the protein and the ligand molecules if this is necessary for the success of their projects.
+
+3. More detailed outputs are available, which tabulate the role of each atom in binding score computation. This information helps users to analyze the structure-affinity relationship of the ligand molecules under study in a more transparent manner.
+
+4. New utilities have been added to aid users to prepare the input structures more conveniently and more accurately.
+
+5. Some bugs found in the previous version have been fixed. Many parts of the program have been optimized to give better performance. 
+
+6. The user manual has been largely rewritten to reflect the many changes in version 1.2. New examples have been provided in the X-Score package for users to practice with this program.
+
+-------------------------------------------------------------------------------
+
+You may direct questions related to the X-Score program to the author at:
+
+Renxiao Wang, Ph.D.
+Research Investigator
+Department of Internal Medicine, Hematology/Oncology Division
+University of Michigan Medical School
+Medical Science Building I, Room 2423
+1150 W. Medical Center Drive, Ann Arbor, MI 48109, U.S.A.
+Tel: (734)764-2449 Fax: (734)764-2532
+E-mail: renxiao@med.umich.edu
+
+Copyright of the X-Score program belongs to the University of Michigan.
+

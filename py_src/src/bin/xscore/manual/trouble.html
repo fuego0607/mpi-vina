@@ -1,0 +1,172 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<title>User manual for X-Score: Trouble shooting</title>
+</head>
+
+<body background="background.gif" bgcolor="#C0C0C0">
+
+<p align="center"><img src="title.gif" width="480" height="160"></p>
+
+<h1 align="center"><font size="5"><strong>Trouble Shooting</strong></font></h1>
+
+<hr size="3">
+
+<p align="justify">The X-Score program is a simple and user-friendly program. If 
+you have experienced any problem when using this program, you may contact the author at the 
+following address. We will try our best to get back to you. <b>However, before you 
+contact us, please make sure you have gone through this manual and it does not 
+have the answer to your question. For general questions about how to run a program on 
+Unix/Linux platform, please consult with a computer expert instead of us.</b></p>
+
+<p align="justify"><i>Renxiao Wang, Ph.D.<br>
+    Research Investigator<br>
+    Department of Internal Medicine, Hematology/Oncology Division<br>
+    University of Michigan Medical School<br>
+    Medical Science Building I, Room 2423<br>
+    1150 W. Medical Center Drive, Ann Arbor, MI 48109, U.S.A.<br>
+    Tel: (734)764-2449 Fax: (734)764-2532<br>
+    E-mail: <a href="mailto:renxiao@med.umich.edu">renxiao@med.umich.edu</a></i></p>
+
+<p>We are in the process of compiling a more complete FAQs for X-Score. 
+Any suggestion or comment on the program is highly appreciated. We have 
+ 
+benefited so much by communicating with the X-Score users.</p>
+
+<hr>
+
+<h1 align="center"><font size="5">FAQs of X-Score</font></h1>
+
+<hr>
+
+<p><b>Questions related to the preparation of input files</b></p>
+
+<p><font color="#0000FF">Q: Why does the program prompt &quot;cannot find 
+binding 
+pocket residues&quot; and then stop?</font></p>
+
+<p align="justify">A:&nbsp; This happens when the ligand is apart from the 
+target protein. Please remember X-Score will not do docking for you. Before applying X-Score, please make sure that the ligand has been docked into 
+the binding site of the target protein and, more importantly, have been 
+saved in the same coordinate system. The simplest way for checking this is to 
+ 
+load the ligand and the protein on the screen to see if they indeed form the 
+complex in your desired way.</p>
+
+<p align="justify"><font color="#0000FF">Q. There are some water molecules in my 
+protein PDB file. Is X-Score able to consider them?</font></p>
+
+<p align="justify">A: The answer is no. X-Score will simply neglect all  
+water molecules. In fact, almost all of today's scoring functions do not have a good 
+idea for handling water molecules even when they exist on the protein-ligand binding 
+interface. This is something we are working very hard on and we expect the next 
+version of X-Score will be able to handle this.</p>
+
+<p align="justify"><font color="#0000FF">Q. My target molecule is a DNA molecule. Can I 
+apply X-Score?</font></p>
+
+<p align="justify">A: No. X-Score is an empirical scoring function  
+developed for evaluating protein-ligand interactions. Its application should not 
+be extended to DNA-ligand complexes.</p>
+
+<p align="justify"><font color="#0000FF">Q. I noticed that X-Score requires 
+polar hydrogen atoms on the protein and all hydrogen atoms on the ligand because X-Score 
+uses a hydrogen-bonding term. Do 
+I need to optimize the hydrogen atom positions while keeping the heavy 
+atoms fixed?&nbsp; </font></p>
+
+<p align="justify">A: It is not necessary. X-Score needs hydrogen 
+atoms only for atom typing. The coordinates of all of the hydrogen atoms, on both 
+protein and ligand, are not used at all in computation. Therefore, the 
+coordinates of hydrogen atoms do not need optimization. By the way, if you want 
+to add all hydrogen atoms (polar and non-polar) to the protein, it will not 
+hurt.</p>
+
+<hr>
+
+<p><b>Questions related to the scoring functions</b></p>
+
+<p><font color="#0000FF">Q: How to choose among the three scoring functions 
+available in X-Score?</font></p>
+
+<p align="justify">A:&nbsp; There are three empirical scoring functions 
+implemented in X-Score, namely HPScore, HMScore, and HSScore. They only differ 
+in the algorithm for calculating the hydrophobic effect term. Statistically, the accuracy of these scoring functions 
+is comparable to each other, at least for the protein-ligand complex set we have 
+used for developing X-Score. By default, all the three scoring functions are 
+enabled and the final result is the average of three predictions. This 
+practice is consistent with the consensus scoring strategy and is generally 
+acceptable. </p>
+
+<p align="justify">However, it is also possible that, for the protein you 
+are studying, one particular scoring function performs better than the other two. In such 
+a situation, using that scoring function alone may lead to even better results. You may want to perform a test run first to figure out which 
+scoring function performs better for your target.</p>
+
+<p align="justify">Started from version 1.2, users are also allowed to set the 
+coefficients in each scoring function. You may want to utilize this 
+option to emphasize or underscore certain types of interactions between 
+protein and ligand to achieve better structure-affinity correlation. </p>
+
+<p align="justify"><font color="#0000FF">Q. Why X-Score's result is always a 
+small number while some other scoring functions give scores around several 
+hundred?</font></p>
+
+<p align="justify">A: Because the scores are given in different units. X-Score gives 
+dissociate constant of the given protein-ligand complex in negative 
+logarithm units (<i>-logK<sub>d</sub></i>). For example, for mili-molar (mM) affinity, 
+-logK<sub>d</sub> = 3.0; 
+for micro-molar (uM) affinity , -logK<sub>d</sub> = 6.0; while for nano-molar (nM) affinity, 
+-logK<sub>d</sub> = 9.0. So, X-Score's result is usually a positive number under 10.</p>
+
+<p align="justify"><font color="#0000FF">Q. Why in the output table some of the ligand 
+molecules show score of zero?</font></p>
+
+<p align="justify">A: Because you have let the program to use chemical rules to 
+pre-screen all of the ligand molecules. If any molecule does not meet the 
+chemical rules you set in the input file, it will be skipped in the later scoring process 
+and therefore get a score of zero. </p>
+
+<p align="justify"><font color="#0000FF">Q. Why cannot I accurately reproduce 
+the original results reported in your JCAMD paper for the dataset included in 
+the X-Score package?</font></p>
+
+<p align="justify">A: That JCAMD paper reports our early work on the development 
+of X-Score, which was mostly done in early 2000. Since then, we have made many 
+modifications to the algorithm and also the program. Particularly, X-Score 
+version 1.2 has been re-calibrated with a new training set. Thus, you should not 
+expect the current version of X-Score to reproduce those original results by 
+100%. But one thing is sure: all of these modifications only lead to better 
+performance.</p>
+
+<hr>
+
+<p><b>Questions related to the chemical rules</b></p>
+
+<p><font color="#0000FF">Q. Why to use chemical 
+rules in pre-screening?</font></p>
+
+<p align="justify">A: It is well-known that drug-like molecules usually have a 
+specific range of physicochemical properties.&nbsp; At present, this feature is 
+typically described by some knowledge-based rules, such as the famous Lipinski's &quot;rule 
+of five&quot;. Our own experience in applying X-Score in virtual library 
+screening also suggests that by turning 
+on the chemical rules for pre-screening, the false positives in the final results could be 
+largely reduced. We recommend you to apply these chemical rules in 
+structure-based virtual screening unless you 
+have better ideas of how to select your compounds.</p>
+
+<hr size="3">
+
+<p align="center"><font color="#000000" size="3"><a href="index.html">[Content]</a></font><font
+size="3"> </font><a href="intro.html"><font size="3">[Introduction]</font></a><font
+size="3"> </font><a href="download.html"><font size="3">[Download]</font></a><font
+size="3"> <a href="install.html">[Installation]</a> </font><a href="usage.html"><font size="3">[Usage]</font></a><font
+size="3"> <a href="utility.html">[Utilities]</a> [Trouble
+Shooting] <a href="refs.html">[References]</a></font></p>
+
+</body>
+</html>

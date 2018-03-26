@@ -1,0 +1,42 @@
+#
+# Compile X-Score on Mac G5 using the IBM c++ compiler. 
+# This Makefile scripts is kindly provided by Dr. Boris Gorelik at the
+# Pharmacy School, the Hebrew University of Jerusalem in Jun 2004.  
+#
+CC = xlC -O3
+#
+CXX = $(CC)  # if not defined, the default compiler will be used otherwise 
+#
+OBJECT = main.o \
+         basic.o \
+         score.o \
+         parameter.o \
+         input.o \
+         ligand.o \
+         logp.o \
+         misc.o \
+         molecule.o \
+         population.o \
+         protein.o \
+         utilities.o 
+#
+LIB = -lm
+#	 
+xscore: $(OBJECT)
+	$(CC) $(OBJECT) $(LIB) -o xscore 
+#
+# you also need to change all the ".c" files into ".cpp" to use this compiler
+#
+main.o: main.cpp xtool.h
+basic.o: basic.cpp xtool.h
+score.o: score.cpp xtool.h
+parameter.o: parameter.cpp xtool.h
+input.o: input.cpp xtool.h
+ligand.o: ligand.cpp xtool.h
+logp.o: logp.cpp xtool.h
+misc.o: misc.cpp xtool.h
+molecule.o: molecule.cpp xtool.h
+population.o: population.cpp xtool.h
+protein.o: protein.cpp xtool.h
+utilities.o: utilities.cpp xtool.h
+#

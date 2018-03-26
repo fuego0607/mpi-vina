@@ -1,0 +1,506 @@
+#! /bin/bash
+
+#store current parent directory
+p=$(pwd)
+
+#ensure needed directory structure is present, as well as required files. exit if none are present
+child_directories=(receptors ligands temp results)
+required_scripts=(vina top_averaged_results top_results obabel)
+
+#my functions
+quit_script () {
+    echo -n "Exit reason: "
+    case $1 in
+        0)
+        echo "Normal"
+        ;;
+        1)
+        echo "Missing required directories!!"
+        ;;
+        2)
+        echo "Missing required files!!"
+        ;;
+        3)
+        echo "Too many invalid selections!!"
+        ;;
+        *)
+        echo "unknown"
+        ;;
+    esac
+
+    echo "EXITING"
+    exit
+}
+
+prepare_run () {
+    sets=("${p}"/receptors/*)
+    dbs=("${p}"/ligands/*)
+
+    #check to make sure there are protein sets in the receptors directory
+    if [ ${#sets[@]} -eq 0 ]; then
+        echo -e "\\nNo receptor file sets found in the receptors directory. Nothing to prepare."
+    else
+
+        #check to make sure there are database sets in the ligands directory
+        if [ ${#dbs[@]} -eq 0 ]; then
+            echo -e "\\nNo databases available in ligands directory. Cannot prepare run."
+        else
+
+            #get valid sets
+            declare -A valid_sets
+            
+            for t in "${sets[@]}"; do
+                set_name=$(basename "${t}")
+                receptor_files=("${t}"/*.pdbqt)
+                receptor_count=${#receptor_files[@]}
+
+                if [ "$receptor_count" -gt 0 ]; then
+                    valid_sets["${set_name}"]="${receptor_count}"
+                fi
+            done
+
+            #get valid databases
+            declare -A valid_databases
+            
+            for t in "${dbs[@]}"; do
+                db_name=$(basename "${t}")
+                ligand_files=("${t}"/*.pdbqt)
+                ligand_count=${#ligand_files[@]}
+
+                if [ "$ligand_count" -gt 0 ]; then
+                    valid_databases["${db_name}"]="${ligand_count}"
+                fi
+            done
+
+            if [ ${#valid_sets[@]} -eq 0 ]; then
+                echo -e "\\nNo sub directories found containing receptor files. Please ensure receptors were copied in pdbqt format into sub directories in the receptors directory."
+            else
+                if [ ${#valid_databases[@]} -eq 0 ]; then
+                    echo -e "\\nNo databases found containing ligand files. Please ensure ligands were copied in pdbqt format into sub directories in the receptors directory."
+                else
+
+                    #protein sets and ligand databases available. let user make protein set selection
+                    echo -e "\\nAvailable sets to prepare:"
+
+                    set_count=0
+
+                    for t in "${!valid_sets[@]}"; do
+                        select_sets[set_count]="$t,${valid_sets[${t}]}"
+                        echo -e "\\t[${set_count}] ${t} (${valid_sets[${t}]} receptor files)"
+                        ((set_count++))
+                    done
+
+                    echo -en "\\nSelect set numbers to prepare, separated by commas: "
+
+                    IFS=',' read -ra set_nums
+
+                    echo -e "\\nAvailable databases:"
+                    db_count=0
+
+                    for t in "${!valid_databases[@]}"; do
+                        select_dbs[db_count]="$t,${valid_databases[${t}]}"
+                        echo -e "\\t[${db_count}] ${t} (${valid_databases[${t}]} ligand files)"
+                        ((db_count++))
+                    done
+
+                    echo -en "\\nSelect database numbers to run jobs for: "
+
+                    IFS=',' read -ra db_nums
+
+                    #we have set nums and db nums. get rid of invalid values
+                    for i in "${!set_nums[@]}"; do
+                        if [ "${set_nums[${i}]}" -lt 0 ] || [ "${set_nums[${i}]}" -ge "$set_count" ]; then
+                            unset "set_nums[${i}]"
+                        fi
+                    done
+
+                    for i in "${!db_nums[@]}"; do
+                        if [ "${db_nums[${i}]}" -lt 0 ] || [ "${db_nums[${i}]}" -ge "$set_count" ]; then
+                            unset "db_nums[${i}]"
+                        fi
+                    done
+
+                    if [ ${#set_nums[@]} -lt 1 ]; then
+                        echo -e "\\nNo valid set number selected."
+                    else
+                        if [ ${#db_nums[@]} -lt 1 ]; then
+                            echo -e "\\nNo valid database number selected."
+                        else
+                            
+                            #determine number of batch files to create
+
+                             #get processing information
+                            echo -en "\\nTotal number of cores to use: "
+
+                            read -r total_cores
+
+                            echo -en "\\nCores to use per process (1 is default): "
+
+                            read -r cores_per_process
+
+                            files_to_create=$((total_cores/cores_per_process))
+
+                            if [ $files_to_create -lt 1 ]; then
+                                files_to_create=1
+                            fi
+
+                            while
+                                echo -en "\\nEnter a unique name for the batch: "
+                                read -r prep_name
+                                batch_dir=${p}/temp/batch_files/${prep_name}
+
+                                [ -d "${batch_dir}" ]
+                            do
+                                echo -e "\\nBatch name already used. Please select another."
+                                continue
+                            done
+                            mkdir -p "${batch_dir}"
+
+                            count=0
+
+                            while [ $count -lt $files_to_create ]; do
+                                batch_file="${batch_dir}"/batch_"${count}".batch
+                                echo "#! /bin/bash" > "${batch_file}"
+                                chmod +x "${batch_file}"
+                                ((count++))
+                            done
+
+                            created_jobs=0
+
+                            #select first set to work with
+                            for i in "${set_nums[@]}"; do
+                                IFS=',' read -ra current_set <<< "${select_sets[i]}"
+                                set_name=${current_set[0]}
+
+                                set_dir="${p}"/receptors/"${set_name}"
+
+                                receptor_files=("${set_dir}"/*.pdbqt)
+
+                                base_conf=${set_dir}/conf.txt
+
+                                #create temp and result directories if they do not already exist
+                                temp_dir=${p}/temp
+
+                                conf_dir=${temp_dir}/conf_files/${set_name}
+
+
+
+                                results_dir=${p}/results/${set_name}
+
+                                if [ ! -d "${conf_dir}" ]; then
+                                    mkdir -p "${conf_dir}"
+                                fi
+
+                                if [ ! -d "${results_dir}" ]; then
+                                    mkdir -p "${results_dir}"
+                                fi
+
+                                for j in "${db_nums[@]}"; do
+                                    IFS=',' read -ra current_db <<< "${select_dbs[j]}"
+                                    db_name=${current_db[0]}
+
+                                    db_dir="${p}"/ligands/"${db_name}"
+
+                                    ligand_files=("${db_dir}"/*.pdbqt)
+
+                                    for receptor in "${receptor_files[@]}"; do
+
+                                        #create results directories for given receptor and database
+                                        receptor_name=$(basename "$receptor" .pdbqt)
+                                        out_dir=${results_dir}/${receptor_name}/${db_name}
+                                        pdbqt_out=${out_dir}/pdbqt_files
+                                        mol2_out=${out_dir}/mol2_files
+                                        vina_out=${temp_dir}/vina_output
+                                        scores=${out_dir}/scores
+
+                                        if [ ! -d "${pdbqt_out}" ]; then
+                                            mkdir -p "${pdbqt_out}"
+                                        else
+                                            rm -f "${pdbqt_out}"/*.pdbqt
+                                        fi
+
+                                        if [ ! -d "${mol2_out}" ]; then
+                                            mkdir -p "${mol2_out}"
+                                        else
+                                            rm -f "${mol2_out}"/*mol2
+                                        fi
+
+                                        if [ ! -d "${vina_out}" ]; then
+                                            mkdir -p "${vina_out}"
+                                        else
+                                            rm -f "${vina_out}"/*.out
+                                        fi
+
+                                        if [ ! -d "${scores}" ]; then
+                                            mkdir -p "${scores}"
+                                        else
+                                            rm -f "${scores}"/*
+                                        fi
+
+                                        for ligand in "${ligand_files[@]}"; do
+
+                                            ligand_name=$(basename "$ligand" .pdbqt)
+
+                                            conf_file=${conf_dir}/${receptor_name}_conf.txt
+                                            {
+                                                cat "$base_conf"
+                                                echo -e "\\n\\n#Receptor file to use. This was automatically generated by the run_vina script."
+                                                echo "receptor = $receptor"
+
+                                                echo -e "\\n#Number of CPU cores/threads per process."
+                                                echo "cpu = $cores_per_process"
+                                            } > "$conf_file"
+
+                                            batch_file_num=$((created_jobs%files_to_create))
+                                            out_name="${db_name}"_"${ligand_name}_out"
+                                            pdbqt="${pdbqt_out}/${out_name}.pdbqt"
+                                            mol2="${mol2_out}/${out_name}.mol2"
+                                            stdout="${vina_out}/stdout"
+                                            stderr="${vina_out}/stderr"
+
+                                            batch_file="${batch_dir}"/batch_"${batch_file_num}".batch
+                                            {
+                                                echo "${p}/vina --config ${conf_file} --ligand ${ligand} --out ${pdbqt} > ${stdout} 2> ${stderr}"
+                                            } >> "$batch_file"
+
+                                            ((created_jobs++))
+                                        done
+                                    done
+                                done
+                            done
+
+                        fi
+                    fi
+                fi
+            fi
+
+        fi
+    fi
+}
+
+start_run () {
+    batches=("${p}"/temp/batch_files/*)
+
+    if [ ${#batches[@]} -eq 0 ]; then
+        echo -e "\\nNo batch sets found. Did you make sure to prepare the run first?"
+    else
+        echo -e "\\nAvailable batches to start:"
+        set_count=0
+
+        for set in "${batches[@]}"; do
+            batch_list=("${set}"/*.batch)
+            batch_count=${#batch_list[@]}
+            echo -e "\\t[${set_count}] $(basename "${set}") (${batch_count} batch files found)"
+            ((set_count++))
+        done
+
+        echo -en "\\nSelect batch numbers to start, separated by commas: "
+
+        IFS=',' read -ra set_nums
+
+        echo -e "\\nWARNING: This will not verify that conf.txt files, receptor files, and ligand files are present in the original locations."
+        echo "         If receptor or ligand files were moved, their directories changed or renamed, or if you edited the base conf.txt, please prepare the runs again."
+        echo -en "\\nStart the run? (y/n): "
+
+        read -r start_run
+
+        case ${start_run:0:1} in
+            "Y" | "y")
+            for i in "${set_nums[@]}"; do
+                if [ "$i" -lt "$set_count" ]; then
+                    #path to set in batches directory
+                    set_dir=${batches[${i}]}
+
+                    batch_name=$(basename "${set_dir}")
+
+                    echo "Starting batch $batch_name"
+
+                    batch_list=("${set_dir}"/*.batch)
+
+                    log_file=${p}/temp/qsub_log.log
+
+                    for j in "${batch_list[@]}"; do
+                        #qsub -o "${log_file}" -j y "$j"
+                        "${j}"
+                    done
+
+                    echo "All jobs for $set_name started."
+                else
+                    echo "$i is not a valid set number. Ignoring."
+                fi
+            done
+            ;;
+            *)
+            echo -e "\\nReturning to menu."
+            ;;
+        esac
+    fi
+}
+
+top_scores () {
+    results=("${p}"/results/*)
+
+    if [ ${#results[@]} -eq 0 ]; then
+        echo -e "\\nNothing to score. Have you ran the docking?"
+    else
+        echo -e "\\nAvailable sets to attain top scores:"
+        set_count=0
+
+        for res in "${results[@]}"; do
+            res_dirs=("${res}"/*)
+            res_count=${#res_dirs[@]}
+            echo -e "\\t[${set_count}] $(basename "${res}") (${res_count} receptor results found)"
+            ((set_count++))
+        done
+
+        echo -en "\\nSelect set numbers to score, separated by commas: "
+
+        IFS=',' read -ra set_nums
+
+        for i in "${set_nums[@]}"; do
+            if [ "$i" -lt "$set_count" ]; then
+                #path to set in temp directory
+                set_dir=${results[${i}]}
+                set_name=$(basename "${set_dir}")
+
+                echo -en "\\nNumber of scores to find: "
+
+                read -r num_scores
+
+                echo "Processing results for $set_name"
+
+                score_dir="${set_dir}"/scores
+
+                if [ -d "${score_dir}" ]; then
+                    rm -rd "${score_dir}"
+                fi
+
+                #list of job files for the set
+                res_dir=("${set_dir}"/*)
+
+                mkdir -p "${score_dir}"
+
+                for r in "${res_dir[@]}"; do
+                    res_name=$(basename "${r}")
+                    out_file=${score_dir}/${res_name}_top_${num_scores}_score.csv
+                    #echo "${p}/obabel -i pdbqt ${pdbqt} -o mol2 -O ${mol2}"
+                    "${p}"/top_averaged_results "${num_scores}" "${r}" > "$out_file"
+                done
+
+                echo "Finished with top scores for ${set_name}."
+            else
+                echo "$i is not a valid set number. Ignoring."
+            fi
+        done
+    fi
+}
+
+list_sets () {
+    sets=("${p}"/receptors/*)
+
+    if [ ${#sets[@]} -eq 0 ]; then
+        echo -e "\\nNo sets found in the receptors directory. Please ensure receptor files you wish to dock are contained within directories."
+    else
+
+        echo -e "\\nAvailable sets:"
+        for t in "${sets[@]}"; do            
+            files=("${t}"/*.pdbqt)
+            count=${#files[@]}
+            echo -e "\\t$(basename "${t}") (${count} receptor files)"
+        done
+    fi
+}
+
+list_databases () {
+    ligs=("${p}"/ligands/*)
+
+    if [ ${#ligs[@]} -eq 0 ]; then
+        echo -e "\\nNo ligand databases found in the ligands directory. Please ensure ligand files are contained within directories for each database."
+    else
+
+        echo -e "\\nAvailable ligand databases:"
+        for t in "${ligs[@]}"; do            
+            files=("${t}"/*.pdbqt)
+            count=${#files[@]}
+            echo -e "\\t$(basename "${t}") (${count} ligand files)"
+        done
+    fi
+}
+
+show_help () {
+    echo "This is some useless help information!"
+}
+
+#allow null results for globbing
+shopt -s nullglob
+
+#print welcome message
+echo -e "Welcome to the AutoDock Vina automation script. This script automates the screening and scoring of pdbqt ligand files against pdbqt receptor files.\\n"
+
+for d in "${child_directories[@]}"; do
+    if [ ! -d "$d" ]; then
+        echo "$d directory not present. Please create it using mkdir."
+        quit_script 1
+    fi
+done
+
+for f in "${required_scripts[@]}"; do
+    if [ ! -x "$f" ]; then
+        echo "$f not present. Please copy it into ${p} before trying to continue."
+        quit_script 2
+    fi
+done
+
+echo -e "All directories and scripts present.\\n"
+
+#directories needed. start main loop
+run=1
+invalid_count=0
+
+while [ $run ]; do
+    echo "Select option:"
+    echo -e "\\t[P]repare run"
+    echo -e "\\t[S]tart run"
+    echo -e "\\t[G]et top scores"
+    echo -e "\\t[A]vailable protein sets"
+    echo -e "\\t[D]atabases available"
+    echo -e "\\t[H]elp"
+    echo -e "\\t[E]xit"
+
+    echo -en "\\nSelection: "
+
+    read -r selection
+
+    case ${selection:0:1} in
+        "P" | "p")
+        prepare_run
+        ;;
+        "S" | "s")
+        start_run
+        ;;
+        "A" | "a")
+        list_sets
+        ;;
+        "D" | "d")
+        list_databases
+        ;;
+        "G" | "g")
+        top_scores
+        ;;
+        "H" | "h")
+        show_help
+        ;;
+        "E" | "e")
+        quit_script 0
+        ;;
+        *)
+        echo "Invalid selection"
+        ((invalid_count++))
+        if [ $invalid_count -eq 3 ]; then
+            quit_script 3
+        fi
+        ;;
+    esac
+
+    echo
+done

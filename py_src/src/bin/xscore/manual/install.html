@@ -1,0 +1,128 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<title>User manual for X-Score: Installation</title>
+</head>
+
+<body background="background.gif" bgcolor="#C0C0C0">
+
+<p align="center"><img src="title.gif" width="480" height="160"></p>
+
+<h1 align="center"><font size="5"><strong>How to install X-Score?</strong></font></h1>
+
+<hr size="3">
+
+<p>The X-Score program is written in ANSI C++ language and has been tested on 
+UNIX and LINUX platforms. After downloading the program package, please move it to the 
+directory where you would like the program to be installed. Then, install the 
+program through the following three-step procedure.</p>
+
+<p><b>Step 1: Uncompress the package</b></p>
+
+<p>You can do 
+this in a Unix / Linux shell as:</p>
+
+<p><strong><font color="#FF0000">gunzip</font></strong><font color="#FF0000" size="3"><strong>&nbsp; 
+xscore.tar.gz</strong></font></p>
+
+<p><font
+color="#FF0000" size="3"><strong>tar&nbsp; -xvf&nbsp; xscore.tar</strong></font></p>
+
+<p><font color="#000000">You will get a directory named as &quot;</font><font color="#0000FF">xscore_v1.2</font><font
+color="#000000">&quot; under your working directory. Under that directory, there are several subdirectories:</font></p>
+
+<ul>
+    <li>&quot;<font color="#0000FF">bin/</font>&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;executable binary code</li>
+    <li>&quot;<font color="#0000FF">c++/</font>&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;source
+        codes in C++</li>
+    <li>&quot;<font color="#0000FF">example/</font>&quot;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;examples 
+    for practicing X-Score</li>
+    <li>&quot;<font color="#0000FF">manual/</font>&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user manual 
+    in HTML</li>
+    <li>&quot;<font color="#0000FF">parameter/</font>&quot;:&nbsp; &nbsp;parameter files</li>
+    <li>&quot;<font color="#0000FF">dataset/</font>&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    the original dataset used for developing X-Score, 230 protein-ligand 
+    complexes in total</li>
+</ul>
+
+<p align="justify"><b>Step 2: Compile the source codes</b></p>
+
+<p>G<font color="#000000">o into the &quot;</font><font color="#0000FF">c++</font><font
+color="#000000">/&quot; subdirectory and run the compiling script
+&quot;</font><font
+color="#0000FF">Makefile</font><font
+color="#000000">&quot; by typing:</font></p>
+
+<p><font
+color="#FF0000" size="3"><strong>make</strong></font></p>
+
+<p align="justify"><font color="#000000">The script will compile the source 
+codes automatically and generate an executable code &quot;</font><font color="#0000FF">xscore</font><font color="#000000">&quot;. 
+Now copy this executable code to the directory &quot;</font><font color="#0000FF">bin/</font><font
+color="#000000">&quot; and use it from there thereafter. This will  prevent  
+accidental loss of source codes.</font></p>
+
+<p align="justify"><font color="#FF0000"><b>cp xscore ../bin</b></font></p>
+
+<p align="justify"><font
+color="#000000">Please notice that the default C++
+compiler assigned in the &quot;</font>Makefile<font
+color="#000000">&quot; script is the SGI
+MIPS &quot;CC&quot; compiler. If you are using a different C++
+compiler on your computer, e.g. the GNU compiler &quot;g++&quot;, you are supposed to
+change the line in the &quot;</font>Makefile<font
+color="#000000">&quot; script started with
+&quot;CC = &quot;. You may also want to enable certain flags of the compiler 
+to make the executable code work more efficiently on your computer. What kinds of flags 
+should be used depends on&nbsp;the type of your compiler and also your computer. Please consult 
+with an expert if you are not sure about what to do.</font></p>
+
+<p align="justify">We have included a copy of pre-compiled, executable  code &quot;<font color="#0000FF">xscore</font>&quot; under the &quot;<font
+color="#0000FF">bin/</font>&quot;  directory. It was compiled on an SGI 
+Octane2/R12000 workstation running IRIX 6.5. You have a good
+chance to use it directly if you are also using the same kind of SGI 
+workstation. </p>
+
+<p align="justify">Currently we have no plan to provide a solution for 
+Windows/DOS users. Such users are welcome to compile the source codes 
+themselves.</p>
+
+<p align="justify"><b>Step 3: Configure the environment variables</b></p>
+
+<p align="justify">You also need to set a few environment v<font
+color="#000000">ariables to run &quot;</font><font
+color="#0000FF">xscore</font><font
+color="#000000">&quot; anywhere regardless its installation location. If you are 
+using C shell, please add the following lines to the &quot;</font><font
+color="#0000FF">.cshrc</font><font
+color="#000000">&quot; file (or &quot;</font><font
+color="#0000FF">.login</font><font
+color="#000000">&quot;, &quot;</font><font
+color="#0000FF">.profile</font><font
+color="#000000">&quot;, whichever you are more used to) under your login directory:</font></p>
+
+<p align="justify"><font color="#FF0000"><b>setenv XTOOL_HOME&nbsp; </b><i>
+&nbsp;the_installation_directory_of_X-Score</i><b><br>
+setenv XTOOL_PARAMETER&nbsp; $XTOOL_HOME/parameter<br>
+setenv XTOOL_BIN&nbsp; $XTOOL_HOME/bin<br>
+set path = ($path&nbsp; $XTOOL_BIN)</b></font></p>
+
+<p align="justify"><font
+color="#000000">If you are using other types of shell, please add the equivalent 
+contents to your configuration file.</font></p>
+
+<hr size="3">
+
+<p align="center"><font color="#000000" size="3"><a href="index.html">[Content]</a></font><font
+size="3"> </font><a href="intro.html"><font size="3">[Introduction]</font></a><font
+size="3"> </font><a href="download.html"><font size="3">[Download]</font></a><font
+size="3"> [Installation] </font><a href="usage.html"><font size="3">[Usage]</font></a><font
+size="3"> <a href="utility.html">[Utilities]</a> <a href="trouble.html">[Trouble
+Shooting]</a> <a href="refs.html">[References]</a></font></p>
+
+</body>
+</html>

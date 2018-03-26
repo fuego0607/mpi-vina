@@ -28,3 +28,5 @@ For more details (e.g., implementation, performance, etc.), the reader is reffer
 Acknowledgement
 ---------------
 Computational resources are provided by ACENET, the regional advanced research computing consortium for universities in Atlantic Canada. ACENET is funded by the Canada Foundation for Innovation (CFI), the Atlantic Canada Opportunities Agency (ACOA), and the provinces of Newfoundland & Labrador, Nova Scotia, and New Brunswick.
+
+xscore license information: http://sw16.im.med.umich.edu/software/xtool/license.htm

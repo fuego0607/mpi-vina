@@ -1,0 +1,28 @@
+#
+# Here are two examples that help X-Score users get familiar with X-Score
+#
+
+trypsin: trypsin complex with noncovalently bound napap, PDB code 1PPC 
+
+	1ppc_protein.pdb: the protein
+	1ppc_ligand.mol2: the ligand (NAPAP)
+	conformers.mol2: 99 decoy conformers of the ligand plus the crystal one 
+
+This example is designed for the users to practice using X-Score to score
+multiple ligand molecules against a given target protein.
+
+e.g. xscore score.input
+
+
+enoyl: enoyl reductase-NAD+-triclosan complex, PDB code 1C14 
+
+	1c14_protein.pdb: the protein 
+	1c14_ligand.mol2: the ligand (Triclosan)
+	1c14_cofactor.mol2: the cofactor (NAD)
+
+This example is designed for the users to practice the shortcut way for 
+running X-Score.
+
+e.g. xscore -score 1c14_protein.pdb 1c14_ligand.mol2
+     xscore -score 1c14_protein.pdb 1c14_cofactor.mol2 1c14_ligand.mol2
+

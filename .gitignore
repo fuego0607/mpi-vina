@@ -33,3 +33,7 @@
 
 *.o[0-9]*
 *.po[0-9]*
+
+#RFScore executable
+py_src/src/bin/rfscore/rf-score-vs
+py_src/src/bin/archives/rfscore.tar.gz

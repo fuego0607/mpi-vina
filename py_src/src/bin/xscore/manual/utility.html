@@ -1,0 +1,154 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<title>User manual for X-Score: Utilities</title>
+</head>
+
+<body background="background.gif" bgcolor="#C0C0C0">
+
+<p align="center"><img src="title.gif" width="480" height="160"></p>
+
+<h1 align="center"><strong><font size="5">Miscellaneous Utilities</font></strong></h1>
+
+<hr size="3" align="left">
+
+<ol>
+    <li>
+    <p align="left"><a href="#subject_1">General synopsis for running the utilities 
+    implemented in X-Score</a></li>
+    <li>
+    <p align="left"><a href="#subject_2">FixPDB: preparing protein molecules in PDB format</a></li>
+    <li>
+    <p align="left"><a href="#subject_3">FixMol2: preparing ligand molecules in Mol2 format</a></li>
+    <li>
+    <p align="left"><a href="#subject_4">LogP: computing octanol-water partition 
+    coefficients</a></li>
+</ol>
+
+<hr align="left">
+
+<h3 align="left"><a name="subject_1">
+<font size="3"><strong>1. General synopsis </strong></font></a><strong>
+<a name="subject_1"><font size="3">for running the utilities implemented in 
+X-Score</font></a></strong></h3>
+
+<p align="left">Started from version 1.2, a number of miscellaneous utilities 
+have been implemented in X-Score. These utilities are designed to help the users 
+in many ways.</p>
+
+<p align="left">The general synopsis for running a certain utility in X-Score 
+is:</p>
+
+<p align="left"><strong>
+<font color="#FF0000">xscore</font></strong><font
+color="#FF0000"><strong style="font-weight: 400">&nbsp; </strong><strong>
+-function</strong><strong style="font-weight: 400"> <i>&nbsp;input_file(s)&nbsp; 
+output_file(s)</i></strong></font></p>
+
+<p align="left">Here the &quot;-function&quot; flag tells the program what to do. 
+Different functions may require different inputs and outputs, which will be 
+explained below.</p>
+
+<hr align="left">
+
+<p align="left"><a name="subject_2">
+<font size="3"><strong>2.
+FixPDB: preparing protein molecules in PDB format</strong></font></a></p>
+
+<p align="left">This function is designed to process a given PDB file and 
+save it in the correct format for X-Score. It is HIGHLY 
+recommended to use a PDB file that has been processed by this function as the <font
+color="#0000FF">RECEPTOR_PDB_FILE</font><font color="#000000">&nbsp; when 
+running X-Score.</font></p>
+
+<p align="left">To run this function:</p>
+
+<p align="left"><strong>
+<font color="#FF0000">xscore</font></strong><font
+color="#FF0000"><strong style="font-weight: 400"> </strong><strong>&nbsp;-fixpdb</strong><strong style="font-weight: 400"> <i>
+&nbsp;the_input_PDB_file&nbsp; the_output_PDB_file</i></strong></font></p>
+
+<p align="left">Basically, this function will do the following jobs. (1) Extract 
+the information that is useful for X-Score computation from the given PDB file, 
+including sequence and atom information, and sort them in the right format. (2) 
+Identify common mistakes in atom naming and correct them according to standard 
+PDB conventions. If the X-Score program cannot recognize certain atoms, such as 
+a non-standard amino acid residue or a ligand molecule, they will be neglected 
+and  not written to the output PDB file. (3) Delete water molecules 
+and inorganic ions that are far away from the protein molecule since they are 
+irrelevant. (4) Keep only polar hydrogen atoms and 
+neglecting non-polar hydrogen atoms. (5) Re-number all of the valid atoms, 
+including ATOMs and HETATMs, continuously started from 1. The residue numbers 
+are kept unchanged so that the users can still find a particular residue 
+conveniently by its original assigned residue number. .</p>
+
+<p align="left">Note that the &quot;FixPDB&quot; function can only refine a PDB file. 
+Before applying it, you are still supposed to do some basic editing work, such 
+as deleting the ligand molecule(s) (if you are working on a complex structure) 
+and add hydrogen atoms. </p>
+
+<hr align="left">
+
+<p align="left"><a name="subject_3">
+<font size="3"><strong>3.
+FixMol2: preparing ligand molecules in Mol2 format</strong></font></a></p>
+
+<p align="left">This function is designed to process a given Mol2 file and 
+save it in the correct format for X-Score. It is HIGHLY 
+recommended to use a Mol2 file that has been processed by this function as the <font
+color="#0000FF">LIGAND_MOL2_FILE</font><font color="#000000"> when running 
+X-Score. This is especially important if X-Score is going to be applied to score 
+a library of various molecules.</font></p>
+
+<p align="left">To run this function:</p>
+
+<p align="left"><strong>
+<font color="#FF0000">xscore</font></strong><font
+color="#FF0000"><strong style="font-weight: 400"> </strong><strong>&nbsp;-fixmol2</strong><strong style="font-weight: 400"> <i>
+&nbsp;the_input_Mol2_file&nbsp; the_output_Mol2_file</i></strong></font></p>
+
+<p align="left">Basically, this function will do the following jobs. (1) Extract 
+the information that is useful for X-Score computation from the given Mol2 file, 
+including atom and bond information.&nbsp;(2) Identify errors in atom typing and 
+bond typing and correct them according to the standard Tripos conventions.  <font color="#000000">Note that this function is 
+able to identify and correct some common errors in atom typing and bond typing 
+but certainly cannot handle all possible situations. We are still working on 
+this function to make it more powerful. </font>(3) If the X-Score 
+program does not have proper parameters for certain atoms in the given molecule, 
+such as Be, B, Si, and metal atoms, this molecule will be neglected and will not 
+be written to the resulting Mol2 file. </p>
+
+<hr align="left">
+
+<p align="left"><a name="subject_4">
+<strong>4. LogP: computing octanol-water partition coefficients</strong></a></p>
+
+<p align="left">Maybe you have already noticed that the
+<a href="refs.html#refs_4">XLOGP2 algorithm</a> is fully implemented in X-Score, 
+which computes logP values using an atom-additive algorithm plus some correction 
+factors. You may  compute the logP values of some given molecules simply by:</p>
+
+<p align="left"><strong>
+<font color="#FF0000">xscore</font></strong><font
+color="#FF0000"><strong style="font-weight: 400"> </strong><strong>&nbsp;-logp</strong><strong style="font-weight: 400"> <i>
+&nbsp;the_input_Mol2_file&nbsp; </i></strong></font></p>
+
+<p align="left">The input Mol2 file may contain a single or multiple molecules. 
+Results will be output on the screen. A log file named as &quot;xlogp.log&quot; 
+will be created under your working directory, which tabulates the detailed 
+information of each computed molecule <a href="xlogp_log.txt">(click here to 
+view an example)</a>. </p>
+
+<hr size="3" align="left">
+
+<p align="center"><a href="index.html"><font size="3">[Content]</font></a><font
+size="3"> </font><a href="intro.html"><font size="3">[Introduction]</font></a><font
+size="3"> </font><a href="download.html"><font size="3">[Download]</font></a><font
+size="3"> <a href="install.html">[Installation]</a> <a href="usage.html">[Usage]</a> 
+[Utilities] <a href="trouble.html">[Trouble
+Shooting]</a> <a href="refs.html">[References]</a></font></p>
+</body>
+</html>

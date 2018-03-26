@@ -1,0 +1,461 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<title>User manual for X-Score: Usage</title>
+</head>
+
+<body background="background.gif" bgcolor="#C0C0C0">
+
+<p align="center"><img src="title.gif" width="480" height="160"></p>
+
+<h1 align="center"><font size="5"><strong>How to use X-Score?</strong></font></h1>
+
+<hr size="3" align="left">
+
+<ol>
+    <li>
+    <p align="left"><a href="#subject_1">General synopsis for running X-Score</a></li>
+    <li>
+    <p align="left"><a href="#subject_2">Parameters for setting input files</a></li>
+    <li>
+    <p align="left"><a href="#subject_3">Parameters for setting output files</a></li>
+    <li>
+    <p align="left"><a href="#subject_4">Parameters for setting scoring functions</a></li>
+    <li>
+    <p align="left"><a href="#subject_5">Parameters for setting chemical rules</a></li>
+    <li>
+    <p align="left"><a href="#subject_6">The shortcut to run X-Score</a></li>
+</ol>
+
+<hr align="left">
+
+<h3 align="left">
+<font size="3"><strong><a name="subject_1">1. General synopsis for running X-Score</a></strong></font></h3>
+
+<p align="left">The basic function of X-Score is to compute the binding score 
+of a given ligand molecule (or multiple ligand molecules) to a target protein. <font color="#000000">All of the parameters needed to run X-Score are assembled in an input 
+parameter file </font>
+<a href="score_input.txt">(click here to view an example)<font color="#000000">.</font></a><font color="#000000"> You are supposed to
+edit this  file to meet your own purpose.  </font></p>
+
+<p align="left"><font color="#000000">To run X-Score, simply
+use this file as input:</font></p>
+
+<p align="left"><strong>
+<font color="#FF0000">xscore</font></strong><font
+color="#FF0000"><strong style="font-weight: 400"> <i>&nbsp;input_parameter_file</i></strong></font></p>
+
+<p align="left">The very first parameter in the input parameter file is <font color="#0000FF">FUNCTION</font>, 
+which should be set as 
+&quot;SCORE&quot;. This tells the program to 
+perform X-Score computation. You are not supposed to change this. Other<font color="#000000"> 
+parameters specified in the input file will be explained below. You 
+can find an example input file under the &quot;</font>bin<font
+color="#000000">/&quot; and the &quot;c++/&quot; directory. </font></p>
+
+<p align="left"><font
+color="#000000">Note that all of the lines started with a &quot;#&quot; sign in the input 
+file will be considered as a comment line and is neglected by the program.</font></p>
+
+<hr align="left">
+
+<p align="left">
+<font size="3"><strong><a name="subject_2">2.
+Parameters for setting input files</a></strong></font></p>
+
+<p align="left">The first few parameters in the parameter file<font color="#000000"> 
+defines the input structural files. X-Score needs the three-dimensional 
+structure of the given protein-ligand complex to calculate its binding constant. The 
+structure could be either experimentally determined or modeled by a docking 
+program. Since most today's molecular docking programs  keep the protein 
+structure rigid 
+while docking the ligand molecules, for the sake of efficient computation, X-Score requires the protein and the 
+ligand molecules
+to be stored in two separate files. </font>The protein is required to be stored 
+in a PDB file, and the ligand molecules should be stored 
+in a Mol2 
+file.</p>
+
+<p align="left"><font color="#000000">The parameter </font><font
+color="#0000FF">RECEPTOR_PDB_FILE</font><font color="#000000"> specifies the 
+path and the name of the PDB file that stores the protein 
+molecule. To prepare this PDB file: (1) Remove any ligand molecule or other 
+organic cofactors. (2) If a metal ion resides in the binding site and is 
+believed to be important for ligand binding, keep it as part of the protein. 
+X-Score considers this kind of metal ions explicitly in computation. According 
+to PDB convention, a metal ion should be described by a line started by &quot;HETATM&quot;. (3) 
+For water molecules, you may keep them in the PDB file 
+(also in the HETATM section). However, X-Score will not consider them in 
+computation. (4) Remember to add hydrogen atoms. X-Score only needs polar 
+hydrogen atoms on the protein in computation. But adding all of the hydrogen 
+atoms (polar and non-polar) will not hurt. </font></p>
+
+<p align="left">Started from version 1.2, an additional utility, &quot;<font color="#0000FF">FixPDB</font>&quot;, 
+has been implemented in X-Score to help users to prepare the input PDB file 
+correctly. Once you have finished the basic editing work described in the 
+previous paragraph, please use this utility to further process your PDB file.
+<a href="utility.html#subject_2">Detailed description of the FixPDB utility is 
+given on the next page. </a></p>
+
+<p align="left"><font color="#000000">The parameter </font><font
+color="#0000FF">LIGAND_MOL2_FILE</font><font color="#000000"> specifies the path 
+and the name of the Mol2 file that stores the structures of the ligand molecules 
+to be scored. One thing</font> should be kept in mind is: the ligand 
+molecules must be pre-docked into the binding pocket of the target protein. X-Score 
+will not do docking for you --- it only calculates the 
+binding scores of given protein-ligand complexes. Also, please make sure that the 
+docked ligand molecules are saved in the same coordinate system as the protein 
+molecule.</p>
+
+<p align="left"><font color="#000000">Since the Mol2 format is defined by 
+Tripos, naturally we recommend SYBYL for 
+preparing all Mol2 files. Other molecular modeling software may support the Mol2 
+format as well. There are also some programs, such as Babel, which are  designed for converting different formats. However, our experience is that such 
+ 
+conversion is not always flawless. To prepare the ligand molecules 
+correctly: (1) Please try your best to correctly set the atom types and bond types 
+according to the Tripos conventions. (2) All hydrogen atoms (polar and 
+non-polar) need to be added to 
+the ligand molecules. (3) Atomic charges are not necessary for X-Score 
+computation. (4) If there are multiple ligand 
+molecules, all of them should be packed one 
+after one in one file. This is often referred as a &quot;multiple&quot; Mol2 file. Since 
+handling a very large file will probably slow down your computer significantly, 
+we do not recommend to pack too many molecules in one file. A generally 
+acceptable ceiling is 100,000 molecules (typically several hundred MB in size). 
+If you have to process more molecules, you may want to break them into several 
+Mol2 files and run X-Score respectively for each of them .</font></p>
+
+<p align="left">Started from version 1.2, an additional utility, &quot;<font color="#0000FF">FixMol2</font>&quot;, 
+has been implemented in X-Score to help users to prepare their Mol2 files 
+correctly. Once you have finished the basic editing work described in the 
+previous paragraph, please use this utility to further process your Mol2 files.
+<a href="utility.html#subject_3">Detailed description of the FixMol2 utility is 
+given on the next page. </a></p>
+
+<p align="left">An additional parameter added in version 1.2 is
+<font color="#0000FF">REFERENCE_MOL2_FILE</font>. It specifies a 
+ligand molecule bound to the protein. This molecule will be used as a reference 
+to define the binding pocket. All of the residues within 10 angstrom 
+from any part of this molecule are defined as pocket residues and will be 
+considered in scoring. If you already know any experimental complex structure of 
+the protein you are studying, using the ligand observed in that structure as 
+this reference molecule is a good idea. Or you can dock a proper molecule into 
+the binding pocket on the protein, and make sure it occupies all the important 
+parts of the binding pocket. </p>
+
+<p align="left">Note that REFERENCE_MOL2_FILE is optional. If you do not want 
+to set a reference molecule, you may set this parameter as &quot;none&quot; or comment 
+out this line by putting a &quot;#&quot; sign as the first 
+letter on that line. In such cases, X-Score will use the first molecule saved in 
+the LIGAND_MOL2_FILE<font color="#000000"> for defining binding pocket. Of course the 
+downside of this approach is that it may not define the binding pocket as 
+precisely as the one using a proper reference molecule.</font></p>
+
+<p align="left">Another parameter is
+<font color="#0000FF">COFACTOR_MOL2_FILE</font>. Sometimes there is an organic cofactor 
+bound together with the 
+ligand molecule inside the binding pocket, such as CoA, NADH, and etc., and you 
+may want to keep it at its place when computing binding affinities of the ligand molecules. 
+In X-Score. you are allowed to supply such a cofactor molecule as part of the 
+protein. Since 
+this kind of cofactors are usually not formed by 
+any standard building blocks, the PDB format is not proper for them. 
+For instead, you can save the cofactor molecule in Mol2 format and specify its 
+path and name with the COFACTOR_MOL2_FILE parameter in the input file. 
+Please follow the instructions mentioned above to prepare this Mol2 file 
+correctly. Also, make sure that this cofactor molecule shares the same coordinate 
+system as the protein and the ligand molecules. </p>
+
+<p align="left">COFACTOR_MOL2_FILE is also optional. You may set it as &quot;none&quot; 
+or comment out that line if you do not want to supply a cofactor molecule. 
+Finally, we would like to point out that, although there is no evidence that it 
+cannot, X-Score was not originally calibrated to compute the binding affinity of 
+a given ligand when a cofactor molecule exists. Applying X-Score to such cases 
+is up to your own choice.</p>
+
+<hr align="left">
+
+<p align="left">
+<font size="3"><strong><a name="subject_3">3. Parameters for setting output 
+files</a></strong></font></p>
+
+<p align="left"><font color="#000000">The next few parameters defines the 
+output files that stores the results of X-Score computation. The basic output is 
+defined by the&nbsp; </font><font
+color="#0000FF">OUTPUT_TABLE_FILE </font>parameter, which specifies a file 
+tabulating the results of each scored ligand molecule <a href="xscore_table.txt">(click here to view an example)</a>.<font color="#000000"> The first line of this table is a title line. 
+Every following line
+contains the information of one ligand molecule&nbsp; The meaning of each column is:</font></p>
+
+<ul>
+    <li>
+    <p align="left"><font color="#000000">The 1st column: rank of the ligand. All the ligand 
+    molecules 
+    are ranked in a decreasing order by their average binding 
+    affinities;</font></li>
+    <li>
+    <p align="left"><font color="#000000">The 2nd column: molecular formula;</font></li>
+    <li>
+    <p align="left"><font color="#000000">The 3rd column: molecular weight;</font></li>
+    <li>
+    <p align="left"><font color="#000000">The 4th column: LogP value;</font></li>
+    <li>
+    <p align="left"><font color="#000000">The 5th column: binding affinity
+        given by HPScore (in <i>pKd</i> units);</font></li>
+    <li>
+    <p align="left"><font color="#000000">The 6th column: binding affinity
+        given by HMScore (in <i>pKd</i> units);</font></li>
+    <li>
+    <p align="left"><font color="#000000">The 7th column: binding affinity
+        given by HSScore (in <i>pKd</i> units);</font></li>
+    <li>
+    <p align="left"><font color="#000000">The 8th column: average binding affinity (in <i>pKd</i> units) 
+    from all of the enabled scoring functions;</font></li>
+    <li>
+    <p align="left"><font color="#000000">The last column: name of the molecule, as extracted 
+    from the Mol2 file;</font></li>
+</ul>
+
+<p align="left"><font color="#000000">This table is a standard space-parsed text file, you can use any spreadsheet 
+program, such as Excel, to load this table. Note that the format of this table has changed 
+a little bit from the previous versions of X-Score.</font></p>
+
+<p align="left"><font color="#000000">X-Score also allows
+you to extract the best-ranked ligand molecules and save each of them in a
+separate Mol2 file for  further analysis. The next two
+parameters in the input file are designed for this purpose:</font></p>
+
+<ul>
+  <li>
+  <p align="left"><align="justify"></align="justify">
+  <font
+color="#0000FF">NUMBER_OF_HITS</font><font color="#000000">:
+the number of top hits you would like to extract from the </font>
+  LIGAND_MOL2_FILE<font
+color="#0000FF">. </font><font color="#000000">Each
+molecule will be output to a separate Mol2 file named after its 
+  ranking, </font>e.g. No1.mol2, No2.mol2, and etc.<font
+color="#0000FF"> </font><font color="#000000">If you do not want to extract any 
+  hits, simply leave this parameter as zero.</font></li>
+  <li>
+  <p align="left"><align="justify"></align="justify">
+  <font color="#0000FF">HITS_DIRECTORY</font><font color="#000000">: </font>
+  specify a directory to dump the top hits. If you are a user of SYBYL, we suggest  
+you to add the suffix&nbsp; &quot;.mdb&quot; to the 
+name of the directory, e.g. &quot;<i>hits.mdb</i>&quot;. 
+In this way, the directory will be recognized by SYBYL as a molecular database 
+and can be loaded directly into a SYBYL spreadsheet.</li>
+</ul>
+
+<p align="left">A newly added option in version 1.2 is <font color="#0000FF">
+OUTPUT_LOG_FILE</font>, which lists detailed scoring information  
+for all of the top ligand molecules that have been selected and extracted (<a href="xscore_log.txt">click 
+here to view an example)</a>. For each molecule,  it (1) gives general 
+properties such as name, formula, and molecular weight; (2) lists in a 
+table the contribution of each atom to each term in each scoring function and 
+the binding scores dissected onto each atom; and (3) gives the overall 
+binding scores of the molecule and scoring functions enabled in scoring. This 
+log file  greatly helps the users to interpret the structure-affinity 
+relationships of the scored molecules.</p>
+
+<p align="left">Note that OUTPUT_LOG_FILE is also optional. If you set 
+OUTPUT_LOG_FILE as &quot;none&quot; or simply comment out that line, X-Score will not 
+create this file.</p>
+
+<p align="left">Another parameter for interpreting  results is
+<font color="#0000FF">SHOW_ATOM_BIND_SCORE</font>. It 
+may be set to &quot;YES&quot; or &quot;NO&quot;. 
+If it is set to &quot;YES&quot;, the program will write atomic binding scores as 
+atomic partial charges in the Mol2 file for each of the top ligand molecules 
+that have been selected and extracted. Thus you can view them directly in a 
+graphics software, such as Sybyl, by displaying atomic charges. This method 
+offers a more vivid way for inspecting the structure-affinity relationships of 
+the scored molecules.</p>
+
+<p align="center"><img border="0" src="abs.gif" width="559" height="362"></p>
+
+<p align="center"><font color="#000080">Illustration of Atomic Binding Score (in 
+<i>pKd</i> units)</font></p>
+
+<hr align="left">
+
+<p align="left">
+<strong><a name="subject_4">4. Parameters for setting scoring functions</a></strong></p>
+
+<p align="left"><font color="#000000">As we have mentioned
+in the <em>Introduction</em> section, there are three scoring functions 
+implemented in X-Score, i.e. HPScore, HMScore, and HSScore. You can find three 
+switches in the input file, i.e. </font><font
+color="#0000FF">APPLY_HPSCORE</font><font color="#000000">, </font><font
+color="#0000FF">APPLY_HMSCORE</font><font color="#000000">, and </font><font
+color="#0000FF">APPLY_HSSCORE</font><font color="#000000">. You may set any of them as &quot;</font>YES<font
+color="#000000">&quot; or &quot;</font>NO<font
+color="#000000">&quot; to enable the scoring function you like in computation. If more than one 
+scoring function are enabled, X-Score will adopt the consensus scoring strategy 
+and rank all of the ligand molecules according to their average binding scores. 
+If all of the three scoring functions are switched on, typically X-Score can 
+process ~10,000 molecules per hour on an SGI Octane2/R12000/360MHz
+workstation.</font></p>
+
+<p align="left">All of the three scoring functions were calibrated with a 
+large set of protein-ligand complexes with known binding constants. In X-Score, 
+there are a default set of coefficients (weight factors) for each term in each 
+scoring function, which were derived from regression. Started from version 1.2, the users are allowed to set those 
+weight factors themselves. For the HPScore function, the weight factors for van der 
+Waals interaction (VDW), hydrogen bonding (HB), hydrophobic interaction (HP), 
+and frozen rotor (RT) are set by <font color="#0000FF">HPSCORE_CVDW</font>,
+<font color="#0000FF">HPSCORE_CHB</font>, <font color="#0000FF">HPSCORE_CHP</font>, 
+and <font color="#0000FF">HPSCORE_CRT</font>, respectively.
+<font color="#0000FF">HPSCORE_C0</font> is a regression constant. Similarly, for 
+the HMScore function, the five weight factors are set by<font color="#0000FF"> 
+HMSCORE_CVDW</font>, <font color="#0000FF">HMSCORE_CHB,</font>
+<font color="#0000FF">HMSCORE_CHM</font>, <font color="#0000FF">HMSCORE_CRT</font>, 
+and <font color="#0000FF">HMSCORE_C0</font>; while for the HSSCore function, the 
+five weight factors are set by <font color="#0000FF">HSSCORE_CVDW</font>,
+<font color="#0000FF">HSSCORE_CHB</font>, <font color="#0000FF">HSSCORE_CHS</font>,
+<font color="#0000FF">HSSCORE_CRT</font>, and <font color="#0000FF">HSSCORE_C0</font>.</p>
+
+<p align="left">These newly added parameters give the users the greatest 
+flexibility in applying X-Score. The users are now able to emphasize or 
+underscore certain types of interactions between the protein and the ligand 
+molecules, which may lead to better structure-affinity correlation of the ligand 
+molecules under study. For example, you may &quot;knock out&quot; certain terms by 
+setting their weight factors to zero.</p>
+
+<p align="left">Note that: (1) all of the coefficient should be in <i>pKd</i> 
+units. (2) Positive coefficients indicate favorable contributions to the overall 
+binding affinity; while negative coefficients indicate unfavorable 
+contributions. (3) If you do not want to set any of the above parameters by 
+yourself, please comment out those lines by putting a &quot;#&quot; as the first letter. In this 
+case, you may not set them to &quot;0&quot; or &quot;none&quot; because it is misleading. If you do 
+not set coefficients by yourself, X-Score will use the default values.</p>
+
+<hr align="left">
+
+<p align="left"><strong><a name="subject_5">5. Parameters for setting 
+chemical rules</a></strong></p>
+
+<p align="left">One of the major applications of X-Score is virtual library 
+screening. Beside ranking all of the candidate molecules according to their 
+binding scores, X-Score allows the users to pre-screening the given molecules with 
+some molecular properties, including molecular weight, octanol-water partition 
+coefficient (logP), and number of H-bond donor and acceptor atoms. <font color="#000000">This is also well known as &quot;Lipinski rules&quot;
+for drug-likeness judgment in the area of drug discovery. Many studies have suggested that, by applying such chemical 
+rules, false positives observed in virtual screening can be effectively reduced. </font></p>
+
+<p align="left"><font color="#000000">There are seven parameters in the input 
+file to set such chemical rules:</font></p>
+
+<ul>
+  <li>
+  <p align="left"><align="justify"></align="justify">
+  <font
+color="#0000FF">APPLY_CHEMICAL_RULES</font><font color="#000000">:
+Whether or not to apply chemical rules to pre-screen the ligands. It can be set 
+  to &quot;</font>YES<font
+color="#000000">&quot; or &quot;</font>NO<font
+color="#000000">&quot;</font></li>
+  <li>
+  <p align="left"><align="justify"></align="justify">
+  <font
+color="#0000FF">MAXIMAL_MOLECULAR_WEIGH</font><font
+color="#000000">: upper limit of the allowed molecular weight;</font></li>
+  <li>
+  <p align="left"><align="justify"></align="justify">
+  <font
+color="#0000FF">MINIMAL_MOLECULAR_WEIGHT</font><font
+color="#000000">: lower limit of the allowed molecular weight;</font></li>
+  <li>
+  <p align="left"><align="justify"></align="justify">
+  <font
+color="#0000FF">MAXIMAL_LOGP</font><font color="#000000">: 
+upper limit of the allowed octanol/water partition coefficient (LogP);</font></li>
+  <li>
+  <p align="left"><align="justify"></align="justify">
+  <font
+color="#0000FF">MINIMAL_LOGP</font><font color="#000000">: 
+lower limit of the allowed octanol/water partition coefficient (LogP);</font></li>
+  <li>
+  <p align="left"><align="justify"></align="justify">
+  <font
+color="#0000FF">MAXIMAL_HB_ATOM</font><font color="#000000">:
+upper limit of the allowed total number of H-bonding donor and acceptor atoms;</font></li>
+  <li>
+  <p align="left"><align="justify"></align="justify">
+  <font
+color="#0000FF">MINIMAL_HB_ATOM</font><font color="#000000">:
+lower limit of the allowed total number of H-bonding donor and acceptor atoms;</font></li>
+</ul>
+
+<p align="left"><font
+color="#000000">A general-purposed
+set of these chemical rules could be: molecular weight between
+200 to 600; LogP between 1 and 6; Number of H-bonding atoms below 8. Here, the logP values are
+calculated by using the<a href="refs.html"> </a></font>
+<a href="refs.html#refs_4">XLOGP2 algorithm<font
+color="#000000">. </font></a></p>
+
+<p align="left">Note that if <font
+color="#000000">you have chosen &quot;YES&quot; for </font><align="justify"></align="justify">
+  APPLY_CHEMICAL_RULES<font
+color="#000000">,  molecules that violate any of the 
+chemical rules above will be skipped in binding score computation  and 
+receive a score of zero. </font></p>
+
+<hr align="left">
+
+<p align="left"><strong><a name="subject_6">6. The shortcut to run X-Score</a></strong></p>
+
+<p align="left">The standard way for running X-Score, which has been 
+described above, is suitable for scoring multiple ligand molecules against a 
+given target protein. This is typically seen in a virtual library screening 
+application. Sometimes the user just wants to score one (or some)  ligand 
+molecule 
+against its target protein and get a quick feedback of its binding score. X-Score provides a shortcut for this 
+purpose (the synopsis is a little different from the previous versions of 
+X-Score: a flag of &quot;-score&quot; is required now):</p>
+
+<p align="left"><font color="#FF0000"><b>xscore&nbsp; -score</b><i>&nbsp;&nbsp; 
+the_protein_PDB_file</i>&nbsp;&nbsp; <i>the_ligand_Mol2_file</i></font></p>
+
+<p align="left">If a cofactor molecule exists:</p>
+
+<p align="left"><font color="#FF0000"><b>xscore &nbsp;-score </b><i>&nbsp;the_protein_PDB_file</i>&nbsp;&nbsp; <i>
+the_cofactor_Mol2_file&nbsp; the_ligand_Mol2_file</i></font></p>
+
+<p align="left">In such cases, the following parameters are automatically set 
+by the program as:</p>
+
+<ul>
+  <li>
+  <p align="left"><font color="#0000FF">APPLY_HPSCORE</font><font color="#000000"> 
+= YES</font></li>
+  <li>
+  <p align="left"><align="justify"><font color="#0000FF">APPLY_HMSCORE</font><font color="#000000"> = YES</font></li>
+  <li>
+  <p align="left"><align="justify"><font color="#0000FF">APPLY_HSSCORE</font> = YES</li>
+  <li>
+  <p align="left"><align="justify"><font color="#0000FF">APPLY_CHEMICAL_RULES</font> = NO</li>
+</ul>
+
+<p align="left">The results will be printed on the screen. The input ligand 
+Mol2 file may contain single or multiple molecules. Upon the completeness of 
+computation, a log file, named as &quot;xscore.log&quot;, will be created under your 
+working directory  recording detailed scoring information of each scored 
+molecule.</p>
+
+<hr size="3" align="left">
+
+<p align="center"><font color="#000000" size="3"><a href="index.html">[Content]</a></font><font
+size="3"> </font><a href="intro.html"><font size="3">[Introduction]</font></a><font
+size="3"> </font><a href="download.html"><font size="3">[Download]</font></a><font
+size="3"> <a href="install.html">[Installation]</a> [Usage]
+<a href="utility.html">[Utilities]</a> <a href="trouble.html">[Trouble
+Shooting]</a> <a href="refs.html">[References]</a></font></p>
+
+</body>
+</html>
