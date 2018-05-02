@@ -5,14 +5,18 @@
 from mpi4py import MPI
 from collections import deque
 from glob import glob
-from os import system, access, X_OK, R_OK
+from os import system, access, X_OK, R_OK, makedirs
+from os.path import exists, basename, splitext
 from datetime import datetime, timedelta
+from subprocess import call
+import commands
 
 MASTER = 0
 
 COMPUTE_TAG = 11
 TERMINATE_TAG = 22
 WORK_REQ_TAG = 33
+DOCK_FAIL_TAG = 44
 
 config_file = "mpidock.config"
 
@@ -191,18 +195,35 @@ def main():
 
 def mpiVinaManager(numProcs, queue, configuration):
     mStatus = MPI.Status()
+    fail_list = []
     while len(queue) > 0:
-        MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
-        print "Worker {0} requesting work\n".format(mStatus.Get_source())
-        MPI.COMM_WORLD.send(queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
+        job_done = MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=MPI.ANY_TAG, status=mStatus)
 
-    for i in range(numProcs - 1):
-        MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=WORK_REQ_TAG, status=mStatus)
+        if mStatus.Get_tag() == DOCK_FAIL_TAG:
+            fail_list.append(job_done)
+            MPI.COMM_WORLD.send(queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
+        else if mStatus.Get_tag == WORK_REQ_TAG:
+            print "Worker {0} requesting work\n".format(mStatus.Get_source())
+            MPI.COMM_WORLD.send(queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
+        else:
+            print "Unknown tag from {0}. Terminating process."
+            MPI.COMM_WORLD.send(None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
+            numProcs -= 1
+
+    while numProcs > 0:
+        job_done = MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=MPI.ANY_TAG, status=mStatus)
+
+        if mStatus.Get_tag() == DOCK_FAIL_TAG:
+            fail_list.append(job_done)
+
         print "Sending termination to worker {0}\n".format(mStatus.Get_source())
         MPI.COMM_WORLD.send(None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
+        numProcs -= 1
 
 def mpiVinaWorker(workerID, configuration, xscore_config):
     print "Worker {0} has started.\n".format(workerID)
+    #source the user's bash_profile on each node to ensure all environment variables are properly set
+    call(["source", "~/.bash_profile"])
     wStatus = MPI.Status()
 
     MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
@@ -211,6 +232,59 @@ def mpiVinaWorker(workerID, configuration, xscore_config):
     while wStatus.Get_tag() == COMPUTE_TAG:
         print "Worker = {0} : receptor {1} ligand {2} is processing...\n".format(workerID, job_info['receptor'], job_info['ligand'])
         #insert vina command
+
+        '''configuration = {"vina": None, "vina_config": None, "run_vina": False, "receptors_dir": None, "ligands_dir": None,
+                         "job_name": datetime.now().strftime("%Y-%m-%d_%H%M%S_%f"), "ligand_db_name": None, "output_dir": None,
+                         "clean_temp_files": None, "run_dsx": False, "run_xscore": False, "run_nnscore": False, "run_rfscore": False,
+                         "pdb_potentials_dir": None, "xscore_base_config": None, "networks_dir": None, "dsx": None, "xscore": None,
+                         "nnscore": None, "rfscore": None}'''
+
+        receptor = basename(splitext(job_info['receptor'])[0])
+        ligand = basename(splitext(job_info['ligand'])[0])
+        output_base = receptor + ligand
+
+        job_out_dir = configuration['output_dir']+"/"+configuration['job_name']
+        temp_out_dir = "./temp/"+configuration['job_name']
+
+        vina_out_dir = job_out_dir+"/vina_out"
+        vina_out = vina_out_dir + "/" + output_base + ".vina_out"
+
+        mol2_out_dir = temp_out_dir+"/mol2_out"
+        mol2_out = mol2_out_dir+"/"+output_base+".mol2"
+
+        dsx_out_dir = job_out_dir+"/dsx_out"
+        dsx_out = dsx_out_dir+"/"+output_base+".dsx_out"
+
+        xscore_out_dir = job_out_dir+"/xscore_out"
+        xscore_out = xscore_out_dir+"/"+output_base+".xscore_out"
+
+        xscore_config_dir = temp_out_dir+"/xscore_config"
+        xscore_config_out = xscore_config_dir+"/"+output_base+".config"
+
+        fixmol2_dir = temp_out_dir+"/fixmol2"
+        fixmol2_out = fixmol2_dir+"/"+output_base
+
+        if configuration['run_vina']:
+            #make vina output directory
+            if not exists(vina_out_dir):
+                makedirs(vina_out_dir)
+
+            commands.run_vina(configuration['vina'], configuration['vina_config'], job_info['receptor'], job_info['ligand'], vina_out)
+
+        if configuration['run_dsx'] or configuration['run_xscore']:
+            #convert vina_out to mol2_out
+            if exists(vina_out):
+                commands.convertToMol2(vina_out, mol2_out)
+
+            if configuration['run_dsx']:
+                if not exists(dsx_out_dir):
+                    makedirs(dsx_out_dir)
+
+                commands.runDSXScore(configuration['dsx'], job_info['receptors_pdb'], mol2_out, configuration['pdb_potentials_dir'], dsx_out)
+
+            if configuration['run_xscore']:
+                if not exists()
+
         MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
         ligandName = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 

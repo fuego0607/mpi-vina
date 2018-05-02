@@ -13,12 +13,12 @@ REFERENCE_MOL2_FILE  ./1ppc_ligand.mol2
 LIGAND_MOL2_FILE     ./conformers.mol2
 #
 OUTPUT_TABLE_FILE    ./xscore.table
-OUTPUT_LOG_FILE      ./xscore.log
+#OUTPUT_LOG_FILE      ./xscore.log
 ###
 ### how many top hits to extract from the LIGAND_MOL2_FILE?
 ###
-NUMBER_OF_HITS       5 
-HITS_DIRECTORY       ./hits.mdb 
+#NUMBER_OF_HITS       5 
+#HITS_DIRECTORY       ./hits.mdb 
 ###
 ### want to include atomic binding scores in the resulting Mol2 files?
 ###
