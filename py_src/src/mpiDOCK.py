@@ -30,7 +30,6 @@ def main():
     numProcs = MPI.COMM_WORLD.Get_size()
     rank = MPI.COMM_WORLD.Get_rank()
     configuration = None
-    xscore_config = None
 
     if numProcs < 2:
         abort_mpi("Not enough processors! You must use at least 2 processors.")
@@ -75,7 +74,10 @@ def main():
             print "{0} : {1}".format(key, value)
 
         #perform checks to ensure all necessary files are present or will be present given the set of configured actions to perform (dock, rescore, etc.)
-        print "\nVerifying all required files are present..."
+        print "\nVerifying all required files and directories are present..."
+
+        configuration['job_out_dir'] = configuration['output_dir']+"/"+configuration['job_name']
+        configuration['temp_out_dir'] = "./temp/"+configuration['job_name']
 
         if configuration['run_vina']:
             #check for vina executable
@@ -91,6 +93,12 @@ def main():
             except IOError as e:
                 abort_mpi("Vina configuration file not found at given path or does not have read permissions.")
 
+            configuration['vina_out_dir'] = configuration['job_out_dir']+"/vina_out"
+
+            #make vina output directory
+            if not exists(configuration['vina_out_dir']):
+                makedirs(configuration['vina_out_dir'])
+
             print "Vina files verified."
 
         if configuration['run_dsx']:
@@ -104,6 +112,11 @@ def main():
             if len(glob(configuration['pdb_potentials_dir']+"/*")) is 0:
                 abort_mpi("Issue with pdb potentials directory. Path is not valid or there are no files present.")
 
+            configuration['dsx_out_dir'] = configuration['job_out_dir']+"/dsx_out"
+
+            if not exists(configuration['dsx_out_dir']):
+                makedirs(configuration['dsx_out_dir'])
+
             print "DSX files verified."
 
         if configuration['run_xscore']:
@@ -113,15 +126,26 @@ def main():
             if not exe:
                 abort_mpi("Issue validating XScore executable. File does not exist at location or does not have executable permissions.")
 
-            #check for configuration file
-            try:
-                config_in = open(configuration['xscore_base_config'], "r")
-                xscore_config = config_in.read()
-                config_in.close()
-            except IOError as e:
-                abort_mpi("XScore base configuration file not found at given path or does not have read permissions.")
+            configuration['xscore_out_dir'] = configuration['job_out_dir']+"/xscore_out"
+            configuration['fixmol2_dir'] = configuration['temp_out_dir']+"/fixmol2"
+            configuration['fixpdb_dir'] = configuration['temp_out_dir']+"/fixpdb"
+
+            if not exists(configuration['xscore_out_dir']):
+                makedirs(configuration['xscore_out_dir'])
+
+            if not exists(configuration['fixmol2_dir']):
+                makedirs(configuration['fixmol2_dir'])
+
+            if not exists(configuration['fixpdb_dir']):
+                makedirs(configuration['fixpdb_dir'])
 
             print "XScore files verified."
+
+        if configuration['run_dsx'] or configuration['run_xscore']:
+            configuration['mol2_out_dir'] = configuration['temp_out_dir']+"/mol2_out"
+
+            if not exists(configuration['mol2_out_dir']):
+                makedirs(configuration['mol2_out_dir'])
 
         if configuration['run_nnscore']:
             #check for dsx executable
@@ -134,6 +158,11 @@ def main():
             if len(glob(configuration['networks_dir']+"/*")) is 0:
                 abort_mpi("Issue with neural networks directory. Path is not valid or there are no files present.")
 
+            configuration['nnscore_dir'] = configuration['job_out_dir']+"/nnscore_out"
+
+            if not exists(configuration['nnscore_dir']):
+                makedirs(configuration['nnscore_dir'])
+
             print "NNScore files verified."
 
         if configuration['run_rfscore']:
@@ -142,6 +171,11 @@ def main():
 
             if not exe:
                 abort_mpi("Issue validating RFScore executable. File does not exist at location or does not have executable permissions.")
+
+            configuration['rfscore_dir'] = configuration['job_out_dir']+"/rfscore_out"
+
+            if not exists(configuration['rfscore_dir']):
+                makedirs(configuration['rfscore_dir'])
 
             print "RFScore files verified."
 
@@ -164,15 +198,19 @@ def main():
 
         #append items to the queue
         for i in receptors:
+            if configuration['run_dsx'] or configuration['run_xscore']:
+                #ensure matching pdb is found
+                receptor_pdb = i.replace(".pdbqt", ".pdb")
+                if receptor_pdb not in receptors_pdb:
+                    abort_mpi("No matching .PDB receptor file found for {0}").format(i)
             for j in ligands:
-                queue.append({"receptor": i, "ligand": j})
+                queue.append({"receptor": i, "ligand": j, "receptor_pdb": receptor_pdb})
 
         total_jobs = len(queue)
 
         print "\n---- STARTING mpiDOCK job {0} ----".format(configuration['job_name'])
 
     configuration = MPI.COMM_WORLD.bcast(configuration, 0)
-    xscore_config = MPI.COMM_WORLD.bcast(xscore_config, 0)
     MPI.COMM_WORLD.Barrier()
 
     if rank == MASTER:
@@ -220,7 +258,7 @@ def mpiVinaManager(numProcs, queue, configuration):
         MPI.COMM_WORLD.send(None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
         numProcs -= 1
 
-def mpiVinaWorker(workerID, configuration, xscore_config):
+def mpiVinaWorker(workerID, configuration):
     print "Worker {0} has started.\n".format(workerID)
     #source the user's bash_profile on each node to ensure all environment variables are properly set
     call(["source", "~/.bash_profile"])
@@ -243,32 +281,23 @@ def mpiVinaWorker(workerID, configuration, xscore_config):
         ligand = basename(splitext(job_info['ligand'])[0])
         output_base = receptor + ligand
 
-        job_out_dir = configuration['output_dir']+"/"+configuration['job_name']
-        temp_out_dir = "./temp/"+configuration['job_name']
+        vina_out = configuration['vina_out_dir']+"/"+output_base+".vina_out"
 
-        vina_out_dir = job_out_dir+"/vina_out"
-        vina_out = vina_out_dir + "/" + output_base + ".vina_out"
+        mol2_out = configuration['mol2_out_dir']+"/"+output_base+".mol2"
 
-        mol2_out_dir = temp_out_dir+"/mol2_out"
-        mol2_out = mol2_out_dir+"/"+output_base+".mol2"
+        dsx_out = configuration['dsx_out_dir']+"/"+output_base+".dsx_out"
+        
+        xscore_out = configuration['xscore_out_dir']+"/"+output_base+".xscore_out"
+        
+        fixmol2_out = configuration['fixmol2_dir']+"/"+output_base+".mol2"
+        
+        fixpdb_out = configuration['fixpdb_dir']+"/"+output_base+".pdb"
 
-        dsx_out_dir = job_out_dir+"/dsx_out"
-        dsx_out = dsx_out_dir+"/"+output_base+".dsx_out"
+        nnscore_out = configuration['nnscore_dir']+"/"+output_base+".nnscore_out"
 
-        xscore_out_dir = job_out_dir+"/xscore_out"
-        xscore_out = xscore_out_dir+"/"+output_base+".xscore_out"
-
-        xscore_config_dir = temp_out_dir+"/xscore_config"
-        xscore_config_out = xscore_config_dir+"/"+output_base+".config"
-
-        fixmol2_dir = temp_out_dir+"/fixmol2"
-        fixmol2_out = fixmol2_dir+"/"+output_base
+        rfscore_out = rfscore_dir+"/"+output_base+".rfscore_out"
 
         if configuration['run_vina']:
-            #make vina output directory
-            if not exists(vina_out_dir):
-                makedirs(vina_out_dir)
-
             commands.run_vina(configuration['vina'], configuration['vina_config'], job_info['receptor'], job_info['ligand'], vina_out)
 
         if configuration['run_dsx'] or configuration['run_xscore']:
@@ -276,14 +305,22 @@ def mpiVinaWorker(workerID, configuration, xscore_config):
             if exists(vina_out):
                 commands.convertToMol2(vina_out, mol2_out)
 
-            if configuration['run_dsx']:
-                if not exists(dsx_out_dir):
-                    makedirs(dsx_out_dir)
+                if configuration['run_dsx']:
+                    
+                    commands.runDSXScore(configuration['dsx'], job_info['receptor_pdb'], mol2_out, configuration['pdb_potentials_dir'], dsx_out)
 
-                commands.runDSXScore(configuration['dsx'], job_info['receptors_pdb'], mol2_out, configuration['pdb_potentials_dir'], dsx_out)
+                if configuration['run_xscore']:
+                    
+                    commands.runXScore(configuration['xscore'], job_info['receptor_pdb'], fixpdb_out, mol2_out, fixmol2_out, xscore_out)
 
-            if configuration['run_xscore']:
-                if not exists()
+        if configuration['run_nnscore']:
+            if exists(vina_out):
+                commands.runNNScore(configuration['nnscore'], job_info['receptor'], vina_out, configuration['networks_dir'], nnscore_out)
+
+
+        if configuration['run_rfscore']:
+            if exists(vina_out):
+                commands.runRFScore(configuration['rfscore'], job_info['receptor'], vina_out, nnscore_out)
 
         MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
         ligandName = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)

@@ -1,5 +1,5 @@
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc_ligand.crystal
 <FORMULA> C27H32N5O4S
@@ -90,7 +90,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.47
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.001
 <FORMULA> C27H32N5O4S
@@ -181,7 +181,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.60
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.002
 <FORMULA> C27H32N5O4S
@@ -272,7 +272,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.54
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.003
 <FORMULA> C27H32N5O4S
@@ -363,7 +363,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.98
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.004
 <FORMULA> C27H32N5O4S
@@ -454,7 +454,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.97
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.005
 <FORMULA> C27H32N5O4S
@@ -545,7 +545,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.68
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.006
 <FORMULA> C27H32N5O4S
@@ -636,7 +636,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.92
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.008
 <FORMULA> C27H32N5O4S
@@ -727,7 +727,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.33
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.009
 <FORMULA> C27H32N5O4S
@@ -818,7 +818,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.24
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.010
 <FORMULA> C27H32N5O4S
@@ -909,7 +909,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.86
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.011
 <FORMULA> C27H32N5O4S
@@ -1000,7 +1000,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.45
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.012
 <FORMULA> C27H32N5O4S
@@ -1091,7 +1091,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.21
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.013
 <FORMULA> C27H32N5O4S
@@ -1182,7 +1182,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.93
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.014
 <FORMULA> C27H32N5O4S
@@ -1273,7 +1273,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.97
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.015
 <FORMULA> C27H32N5O4S
@@ -1364,7 +1364,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.20
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.016
 <FORMULA> C27H32N5O4S
@@ -1455,7 +1455,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.14
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.017
 <FORMULA> C27H32N5O4S
@@ -1546,7 +1546,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.13
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:04 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.018
 <FORMULA> C27H32N5O4S
@@ -1637,7 +1637,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.35
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.019
 <FORMULA> C27H32N5O4S
@@ -1728,7 +1728,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.18
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.020
 <FORMULA> C27H32N5O4S
@@ -1819,7 +1819,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.08
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.021
 <FORMULA> C27H32N5O4S
@@ -1910,7 +1910,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.21
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.022
 <FORMULA> C27H32N5O4S
@@ -2001,7 +2001,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.07
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.023
 <FORMULA> C27H32N5O4S
@@ -2092,7 +2092,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.00
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.024
 <FORMULA> C27H32N5O4S
@@ -2183,7 +2183,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.97
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.025
 <FORMULA> C27H32N5O4S
@@ -2274,7 +2274,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.91
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:55 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.026
 <FORMULA> C27H32N5O4S
@@ -2365,7 +2365,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.12
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.027
 <FORMULA> C27H32N5O4S
@@ -2456,7 +2456,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.80
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.028
 <FORMULA> C27H32N5O4S
@@ -2547,7 +2547,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.69
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.029
 <FORMULA> C27H32N5O4S
@@ -2638,7 +2638,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.26
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.030
 <FORMULA> C27H32N5O4S
@@ -2729,7 +2729,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.16
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.031
 <FORMULA> C27H32N5O4S
@@ -2820,7 +2820,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.98
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.032
 <FORMULA> C27H32N5O4S
@@ -2911,7 +2911,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.94
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.033
 <FORMULA> C27H32N5O4S
@@ -3002,7 +3002,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.21
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.034
 <FORMULA> C27H32N5O4S
@@ -3093,7 +3093,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.86
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.035
 <FORMULA> C27H32N5O4S
@@ -3184,7 +3184,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.64
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.036
 <FORMULA> C27H32N5O4S
@@ -3275,7 +3275,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.30
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.037
 <FORMULA> C27H32N5O4S
@@ -3366,7 +3366,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.84
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.038
 <FORMULA> C27H32N5O4S
@@ -3457,7 +3457,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.93
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.039
 <FORMULA> C27H32N5O4S
@@ -3548,7 +3548,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.90
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.040
 <FORMULA> C27H32N5O4S
@@ -3639,7 +3639,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.93
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.041
 <FORMULA> C27H32N5O4S
@@ -3730,7 +3730,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.07
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.042
 <FORMULA> C27H32N5O4S
@@ -3821,7 +3821,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.06
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.043
 <FORMULA> C27H32N5O4S
@@ -3912,7 +3912,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.07
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.044
 <FORMULA> C27H32N5O4S
@@ -4003,7 +4003,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.92
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.045
 <FORMULA> C27H32N5O4S
@@ -4094,7 +4094,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.72
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.046
 <FORMULA> C27H32N5O4S
@@ -4185,7 +4185,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.50
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.047
 <FORMULA> C27H32N5O4S
@@ -4276,7 +4276,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.07
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.048
 <FORMULA> C27H32N5O4S
@@ -4367,7 +4367,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.16
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.049
 <FORMULA> C27H32N5O4S
@@ -4458,7 +4458,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.45
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.050
 <FORMULA> C27H32N5O4S
@@ -4549,7 +4549,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.58
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.051
 <FORMULA> C27H32N5O4S
@@ -4640,7 +4640,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.24
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.052
 <FORMULA> C27H32N5O4S
@@ -4731,7 +4731,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.54
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.053
 <FORMULA> C27H32N5O4S
@@ -4822,7 +4822,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.73
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.054
 <FORMULA> C27H32N5O4S
@@ -4913,7 +4913,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.85
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.055
 <FORMULA> C27H32N5O4S
@@ -5004,7 +5004,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.77
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.056
 <FORMULA> C27H32N5O4S
@@ -5095,7 +5095,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.67
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.057
 <FORMULA> C27H32N5O4S
@@ -5186,7 +5186,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.68
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.058
 <FORMULA> C27H32N5O4S
@@ -5277,7 +5277,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.39
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.059
 <FORMULA> C27H32N5O4S
@@ -5368,7 +5368,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.35
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.060
 <FORMULA> C27H32N5O4S
@@ -5459,7 +5459,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.10
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.061
 <FORMULA> C27H32N5O4S
@@ -5550,7 +5550,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.83
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.062
 <FORMULA> C27H32N5O4S
@@ -5641,7 +5641,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.57
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.063
 <FORMULA> C27H32N5O4S
@@ -5732,7 +5732,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.65
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.064
 <FORMULA> C27H32N5O4S
@@ -5823,7 +5823,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.53
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.065
 <FORMULA> C27H32N5O4S
@@ -5914,7 +5914,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.42
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.066
 <FORMULA> C27H32N5O4S
@@ -6005,7 +6005,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.29
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.067
 <FORMULA> C27H32N5O4S
@@ -6096,7 +6096,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.66
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.068
 <FORMULA> C27H32N5O4S
@@ -6187,7 +6187,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.07
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.069
 <FORMULA> C27H32N5O4S
@@ -6278,7 +6278,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  6.10
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.070
 <FORMULA> C27H32N5O4S
@@ -6369,7 +6369,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.94
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.071
 <FORMULA> C27H32N5O4S
@@ -6460,7 +6460,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.56
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.072
 <FORMULA> C27H32N5O4S
@@ -6551,7 +6551,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.82
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.073
 <FORMULA> C27H32N5O4S
@@ -6642,7 +6642,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.73
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.074
 <FORMULA> C27H32N5O4S
@@ -6733,7 +6733,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.46
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.075
 <FORMULA> C27H32N5O4S
@@ -6824,7 +6824,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.89
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.076
 <FORMULA> C27H32N5O4S
@@ -6915,7 +6915,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.60
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.077
 <FORMULA> C27H32N5O4S
@@ -7006,7 +7006,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.71
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.078
 <FORMULA> C27H32N5O4S
@@ -7097,7 +7097,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.32
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.079
 <FORMULA> C27H32N5O4S
@@ -7188,7 +7188,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.73
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.080
 <FORMULA> C27H32N5O4S
@@ -7279,7 +7279,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.55
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:05 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.081
 <FORMULA> C27H32N5O4S
@@ -7370,7 +7370,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.72
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.082
 <FORMULA> C27H32N5O4S
@@ -7461,7 +7461,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.56
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.083
 <FORMULA> C27H32N5O4S
@@ -7552,7 +7552,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.43
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.084
 <FORMULA> C27H32N5O4S
@@ -7643,7 +7643,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.90
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.085
 <FORMULA> C27H32N5O4S
@@ -7734,7 +7734,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.18
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.086
 <FORMULA> C27H32N5O4S
@@ -7825,7 +7825,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.55
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.087
 <FORMULA> C27H32N5O4S
@@ -7916,7 +7916,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.68
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.088
 <FORMULA> C27H32N5O4S
@@ -8007,7 +8007,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  4.75
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.089
 <FORMULA> C27H32N5O4S
@@ -8098,7 +8098,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.85
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.090
 <FORMULA> C27H32N5O4S
@@ -8189,7 +8189,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.36
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:56 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.091
 <FORMULA> C27H32N5O4S
@@ -8280,7 +8280,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.64
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:57 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.092
 <FORMULA> C27H32N5O4S
@@ -8371,7 +8371,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.06
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:57 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.093
 <FORMULA> C27H32N5O4S
@@ -8462,7 +8462,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  4.67
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:57 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.094
 <FORMULA> C27H32N5O4S
@@ -8553,7 +8553,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.26
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:57 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.095
 <FORMULA> C27H32N5O4S
@@ -8644,7 +8644,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.17
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:57 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.096
 <FORMULA> C27H32N5O4S
@@ -8735,7 +8735,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  4.98
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:57 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.097
 <FORMULA> C27H32N5O4S
@@ -8826,7 +8826,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.04
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:57 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.098
 <FORMULA> C27H32N5O4S
@@ -8917,7 +8917,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  5.50
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:57 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.099
 <FORMULA> C27H32N5O4S
@@ -9008,7 +9008,7 @@ HSSCORE = 3.328 + (0.004)*VDW + (0.073)*HB + (0.004)*HS + (-0.090)*RT =  4.93
 <END>
 
 ### X-Score scoring information
-### Created by X-Score on Tue Apr 17 13:11:57 2018
+### Created by X-Score on Wed May  2 18:41:06 2018
 
 <MOLECULE> 1ppc-ligand.1ppc.100
 <FORMULA> C27H32N5O4S

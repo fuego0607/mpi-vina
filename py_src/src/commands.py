@@ -20,7 +20,7 @@ def runDSXScore(dsx_exe, receptor_pdb, vinaScore_mol2, potentials_dir, dsx_out):
 	command = command.split()
 	call(command)
 
-def runXScore(xscore_exe, receptor_pdb, pdb_fix, vinaScore_mol2, mol2_fix, conf, input_file):
+def runXScore(xscore_exe, receptor_pdb, pdb_fix, vinaScore_mol2, mol2_fix, output_file):
 	#"xscore -fixpdb ${receptor_pdb} ${pdb_fix}"
 	#convert receptor from .pdb to .pdb_fixed using xscore
 	pdb_command = "{0} -fixpdb {1} {2} > /dev/null 2>&1".format(xscore_exe, receptor_pdb, pdb_fix)
@@ -34,7 +34,7 @@ def runXScore(xscore_exe, receptor_pdb, pdb_fix, vinaScore_mol2, mol2_fix, conf,
 
 	#update and write config file to disk
 
-	command = "{0} {1} > /dev/null 2>&1".format(xscore_exe, input_file)
+	command = "{0} -score {1} {2} > {3}".format(xscore_exe, pdb_fix, mol2_fix, output_file)
 	command = command.split()
 	call(command)
 

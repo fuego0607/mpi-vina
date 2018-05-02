@@ -2667,8 +2667,8 @@ void Protein::Rearrange_IDs()
 	int i,j,k,id1,id2,count;
 	char res_id[10];
 	Atom temp;
-	vector <int> old_id;
-	vector <int> new_id;
+	std::vector <int> old_id;
+	std::vector <int> new_id;
 
 	// now re-assign residue IDs for hetero-atoms, started from 1
 	// give metal ions, PO4, SO4 the priority 

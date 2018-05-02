@@ -5,7 +5,7 @@
 # include <math.h>
 # include <ctype.h>
 # include <time.h>
-# include <vector.h>
+# include <vector>
 # define TRUE 1
 # define FALSE 0
 # define PI 3.1416
@@ -403,8 +403,8 @@ class Ring
 	int type;	// 1 = normal; 2 = aromatic
 
 	int num_member;
-	vector <int> atom_id;   // atom id in this ring
-	vector <int> bond_id;   // bond id in this ring
+	std::vector <int> atom_id;   // atom id in this ring
+	std::vector <int> bond_id;   // bond id in this ring
 
 	float centroid[3];
 
@@ -435,7 +435,7 @@ class DotSet
 {
  public:
 	int num_dot;
-	vector <Dot> dot;
+	std::vector <Dot> dot;
 	float r;
 	char type[10];
 	float unit;		// default contribution of each dot to total
@@ -460,10 +460,10 @@ class Residue
 	char id[10];
 
 	int num_atom;
-	vector <Atom> atom;
+	std::vector <Atom> atom;
 
-	vector <Dot> vol_dot;
-	vector <Dot> sur_dot;
+	std::vector <Dot> vol_dot;
+	std::vector <Dot> sur_dot;
 
 	Residue(); ~Residue();
 
@@ -485,7 +485,7 @@ class Chain
 	char label;
 
 	int length;
-	vector <Residue> residue;
+	std::vector <Residue> residue;
 
 	Chain(); ~Chain();
 
@@ -682,10 +682,10 @@ class Molecule
 	char charge_type[256]; 
 
 	int num_ring;
-	vector <Ring> ring;
+	std::vector <Ring> ring;
 
-	vector <Dot> vol_dot;
-	vector <Dot> sur_dot;
+	std::vector <Dot> vol_dot;
+	std::vector <Dot> sur_dot;
 
         Molecule(); ~Molecule();
         Molecule(int max_atom_num, int max_bond_num);
@@ -846,16 +846,16 @@ class Protein	// full version
 	float surface,bnsur,bpsur;
 
 	int num_atom;
-	vector <Atom> atom;
+	std::vector <Atom> atom;
 
 	int num_chain;
-	vector <Chain> chain;
+	std::vector <Chain> chain;
 
 	int num_ring;
-	vector <Ring> ring;
+	std::vector <Ring> ring;
 
-	vector <Dot> vol_dot;
-	vector <Dot> sur_dot;
+	std::vector <Dot> vol_dot;
+	std::vector <Dot> sur_dot;
 
         Protein(); ~Protein();
 
