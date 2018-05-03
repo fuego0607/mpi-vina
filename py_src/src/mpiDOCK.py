@@ -43,7 +43,9 @@ def main():
                          "job_name": datetime.now().strftime("%Y-%m-%d_%H%M%S_%f"), "ligand_db_name": None, "output_dir": None,
                          "clean_temp_files": None, "run_dsx": False, "run_xscore": False, "run_nnscore": False, "run_rfscore": False,
                          "pdb_potentials_dir": None, "xscore_base_config": None, "networks_dir": None, "dsx": None, "xscore": None,
-                         "nnscore": None, "rfscore": None}
+                         "nnscore": None, "rfscore": None, "job_out_dir": None, "temp_out_dir": None, "vina_out_dir": None,
+                         "dsx_out_dir": None, "xscore_out_dir": None, "fixmol2_dir": None, "fixpdb_dir": None, "mol2_out_dir": None,
+                         "nnscore_dir": None, "rfscore_dir": None}
         
         #try to open and read in configuration file. abort MPI if errors occur
         try:
@@ -215,9 +217,9 @@ def main():
 
     if rank == MASTER:
         startTime = MPI.Wtime(); #start timer.
-        mpiVinaManager(numProcs, queue, configuration);   #Master processor will play the role of mpiVINA manager.
+        #mpiVinaManager(numProcs - 1, queue, configuration);   #Master processor will play the role of mpiVINA manager.
     else:
-        mpiVinaWorker(rank, configuration, xscore_config);    #All other processors will play the role of mpiVINA worker.
+        #mpiVinaWorker(rank, configuration, xscore_config);    #All other processors will play the role of mpiVINA worker.
 
     MPI.COMM_WORLD.Barrier()
 
