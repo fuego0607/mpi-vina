@@ -7,6 +7,7 @@
 #
 # Join STDOUT and STDERR
 #$ -j y
+#$ -o ./logs/$JOB_ID.log
 #
 # Request the mpi parallel environment and 2 slots
 #$ -pe mpi 2
