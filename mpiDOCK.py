@@ -19,7 +19,7 @@ TERMINATE_TAG = 22
 WORK_REQ_TAG = 33
 DOCK_FAIL_TAG = 44
 
-config_file = "mpidock.config"
+config_file = "config/mpidock.config"
 
 def abort_mpi(error_message):
     print error_message
@@ -218,9 +218,11 @@ def main(argv):
 
     if rank == MASTER:
         startTime = MPI.Wtime(); #start timer.
-        mpiVinaManager(numProcs - 1, queue, configuration);   #Master processor will play the role of mpiVINA manager.
+        #mpiVinaManager(numProcs - 1, queue, configuration);   #Master processor will play the role of mpiVINA manager.
+        pass
     else:
-        mpiVinaWorker(rank, configuration);    #All other processors will play the role of mpiVINA worker.
+        #mpiVinaWorker(rank, configuration);    #All other processors will play the role of mpiVINA worker.
+        pass
 
     MPI.COMM_WORLD.Barrier()
 
