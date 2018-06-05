@@ -19,4 +19,4 @@ source /usr/share/Modules/init/bash
 module load mvapich2-2.0/gcc-4.7.2
 
 # Run the mpi job
-/act/mvapich2-2.0/gcc-4.7.2/bin/mpiexec -np $NSLOTS python /home/nanobiolab/mpi-vina/bin/dock_scripts/mpiDOCK.py
+/act/mvapich2-2.0/gcc-4.7.2/bin/mpiexec -np $NSLOTS python /home/nanobiolab/mpi-vina/mpiDOCK.py

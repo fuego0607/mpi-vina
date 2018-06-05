@@ -324,10 +324,10 @@ def mpiVinaWorker(workerID, configuration):
 
     if wStatus.Get_tag() == TERMINATE_TAG:
         #print "Worker {0} has terminated.\n".format(workerID)
-    pass
+        pass
     else:
         #print "Worker {0} has received invalid Tag\n".format(workerID)
-    pass
+        pass
 
 if __name__ == '__main__':
     main(sys.argv[1:])
