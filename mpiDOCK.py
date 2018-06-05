@@ -10,6 +10,7 @@ from os.path import exists, basename, splitext
 from datetime import datetime, timedelta
 from subprocess import call
 import score_commands as commands
+import sys, getopt
 
 MASTER = 0
 
@@ -26,7 +27,7 @@ def abort_mpi(error_message):
     MPI.COMM_WORLD.Abort(1)
     exit()
 
-def main():
+def main(argv):
     numProcs = MPI.COMM_WORLD.Get_size()
     rank = MPI.COMM_WORLD.Get_rank()
     configuration = None
@@ -327,4 +328,4 @@ def mpiVinaWorker(workerID, configuration):
     pass
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
