@@ -9,7 +9,7 @@ from os import system, access, X_OK, R_OK, makedirs
 from os.path import exists, basename, splitext
 from datetime import datetime, timedelta
 from subprocess import call
-import commands
+import score_commands as commands
 
 MASTER = 0
 
@@ -45,7 +45,7 @@ def main():
                          "pdb_potentials_dir": None, "xscore_base_config": None, "networks_dir": None, "dsx": None, "xscore": None,
                          "nnscore": None, "rfscore": None, "job_out_dir": None, "temp_out_dir": None, "vina_out_dir": None,
                          "dsx_out_dir": None, "xscore_out_dir": None, "fixmol2_dir": None, "fixpdb_dir": None, "mol2_out_dir": None,
-                         "nnscore_dir": None, "rfscore_dir": None}
+                         "nnscore_dir": None, "rfscore_dir": None, "obabel": None}
         
         #try to open and read in configuration file. abort MPI if errors occur
         try:
@@ -209,7 +209,7 @@ def main():
                 queue.append({"receptor": i, "ligand": j, "receptor_pdb": receptor_pdb})
 
         total_jobs = len(queue)
-
+    
         print "\n---- STARTING mpiDOCK job {0} ----".format(configuration['job_name'])
 
     configuration = MPI.COMM_WORLD.bcast(configuration, 0)
@@ -217,10 +217,9 @@ def main():
 
     if rank == MASTER:
         startTime = MPI.Wtime(); #start timer.
-        #mpiVinaManager(numProcs - 1, queue, configuration);   #Master processor will play the role of mpiVINA manager.
+        mpiVinaManager(numProcs - 1, queue, configuration);   #Master processor will play the role of mpiVINA manager.
     else:
-        #mpiVinaWorker(rank, configuration, xscore_config);    #All other processors will play the role of mpiVINA worker.
-        pass
+        mpiVinaWorker(rank, configuration);    #All other processors will play the role of mpiVINA worker.
 
     MPI.COMM_WORLD.Barrier()
 
@@ -229,12 +228,12 @@ def main():
         print "\n.........................................." 
         print "   Number of workers       = {0}".format(numProcs - 1)
         print "   Number of dockings        = {0}".format(total_jobs)
-        print "   Total time required     = {0} seconds.".format(str(timedelta(seconds=(endTime - startTime))))
+        print "   Total time required     = {0}".format(str(timedelta(seconds=(endTime - startTime))))
         print ".........................................."
 
     MPI.Finalize()
 
-def mpiVinaManager(NumWorkers, queue, configuration):
+def mpiVinaManager(numWorkers, queue, configuration):
     mStatus = MPI.Status()
     fail_list = []
     while len(queue) > 0 and numWorkers > 0:
@@ -244,40 +243,39 @@ def mpiVinaManager(NumWorkers, queue, configuration):
             fail_list.append(job_done)
             MPI.COMM_WORLD.send(queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
         elif mStatus.Get_tag() == WORK_REQ_TAG:
-            print "Worker {0} requesting work\n".format(mStatus.Get_source())
+            #print "Worker {0} requesting work\n".format(mStatus.Get_source())
             MPI.COMM_WORLD.send(queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
         else:
-            print "Unknown tag from {0}. Terminating process."
+            #print "Unknown tag {0} from {1}. Terminating process.".format(mStatus.Get_tag(), mStatus.Get_source())
             MPI.COMM_WORLD.send(None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
-            NumWorkers -= 1
-
-    while NumWorkers > 0:
+            numWorkers = numWorkers - 1
+    
+    while numWorkers > 0:
         job_done = MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=MPI.ANY_TAG, status=mStatus)
 
         if mStatus.Get_tag() == DOCK_FAIL_TAG:
             fail_list.append(job_done)
 
-        print "Sending termination to worker {0}\n".format(mStatus.Get_source())
+        #print "Sending termination to worker {0}\n".format(mStatus.Get_source())
         MPI.COMM_WORLD.send(None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
-        NumWorkers -= 1
+        numWorkers = numWorkers - 1
 
 def mpiVinaWorker(workerID, configuration):
-    print "Worker {0} has started.\n".format(workerID)
+    #print "Worker {0} has started.\n".format(workerID)
     #source the user's bash_profile on each node to ensure all environment variables are properly set
-    call(["./source_bash_profile.bash"])
     wStatus = MPI.Status()
 
     MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
     job_info = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 
     while wStatus.Get_tag() == COMPUTE_TAG:
-        print "Worker = {0} : receptor {1} ligand {2} is processing...\n".format(workerID, job_info['receptor'], job_info['ligand'])
+        #print "Worker = {0} : receptor {1} ligand {2} is processing...\n".format(workerID, job_info['receptor'], job_info['ligand'])
 
         receptor = basename(splitext(job_info['receptor'])[0])
         ligand = basename(splitext(job_info['ligand'])[0])
-        output_base = receptor + ligand
+        output_base = receptor + "_" + ligand
 
-        vina_out = configuration['vina_out_dir']+"/"+output_base+".vina_out"
+        vina_out = configuration['vina_out_dir']+"/"+output_base+".pdbqt"
 
         mol2_out = configuration['mol2_out_dir']+"/"+output_base+".mol2"
 
@@ -294,12 +292,12 @@ def mpiVinaWorker(workerID, configuration):
         rfscore_out = configuration['rfscore_dir']+"/"+output_base+".rfscore_out"
 
         if configuration['run_vina']:
-            commands.run_vina(configuration['vina'], configuration['vina_config'], job_info['receptor'], job_info['ligand'], vina_out)
+            commands.runVina(configuration['vina'], configuration['vina_config'], job_info['receptor'], job_info['ligand'], vina_out)
 
         if configuration['run_dsx'] or configuration['run_xscore']:
             #convert vina_out to mol2_out
             if exists(vina_out):
-                commands.convertToMol2(vina_out, mol2_out)
+                commands.convertToMol2(configuration['obabel'], vina_out, mol2_out)
 
                 if configuration['run_dsx']:
                     
@@ -316,15 +314,17 @@ def mpiVinaWorker(workerID, configuration):
 
         if configuration['run_rfscore']:
             if exists(vina_out):
-                commands.runRFScore(configuration['rfscore'], job_info['receptor'], vina_out, nnscore_out)
+                commands.runRFScore(configuration['rfscore'], job_info['receptor'], vina_out, rfscore_out)
 
         MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
         job_info = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 
     if wStatus.Get_tag() == TERMINATE_TAG:
-        print "Worker {0} has terminated.\n".format(workerID)
+        #print "Worker {0} has terminated.\n".format(workerID)
+    pass
     else:
-        print "Worker {0} has received invalid Tag\n".format(workerID)
+        #print "Worker {0} has received invalid Tag\n".format(workerID)
+    pass
 
 if __name__ == '__main__':
     main()
