@@ -220,6 +220,7 @@ def main():
         #mpiVinaManager(numProcs - 1, queue, configuration);   #Master processor will play the role of mpiVINA manager.
     else:
         #mpiVinaWorker(rank, configuration, xscore_config);    #All other processors will play the role of mpiVINA worker.
+        pass
 
     MPI.COMM_WORLD.Barrier()
 
@@ -233,24 +234,24 @@ def main():
 
     MPI.Finalize()
 
-def mpiVinaManager(numProcs, queue, configuration):
+def mpiVinaManager(NumWorkers, queue, configuration):
     mStatus = MPI.Status()
     fail_list = []
-    while len(queue) > 0:
+    while len(queue) > 0 and numWorkers > 0:
         job_done = MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=MPI.ANY_TAG, status=mStatus)
 
         if mStatus.Get_tag() == DOCK_FAIL_TAG:
             fail_list.append(job_done)
             MPI.COMM_WORLD.send(queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
-        else if mStatus.Get_tag == WORK_REQ_TAG:
+        elif mStatus.Get_tag() == WORK_REQ_TAG:
             print "Worker {0} requesting work\n".format(mStatus.Get_source())
             MPI.COMM_WORLD.send(queue.popleft(), dest=mStatus.Get_source(), tag=COMPUTE_TAG)
         else:
             print "Unknown tag from {0}. Terminating process."
             MPI.COMM_WORLD.send(None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
-            numProcs -= 1
+            NumWorkers -= 1
 
-    while numProcs > 0:
+    while NumWorkers > 0:
         job_done = MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag=MPI.ANY_TAG, status=mStatus)
 
         if mStatus.Get_tag() == DOCK_FAIL_TAG:
@@ -258,12 +259,12 @@ def mpiVinaManager(numProcs, queue, configuration):
 
         print "Sending termination to worker {0}\n".format(mStatus.Get_source())
         MPI.COMM_WORLD.send(None, dest=mStatus.Get_source(), tag=TERMINATE_TAG)
-        numProcs -= 1
+        NumWorkers -= 1
 
 def mpiVinaWorker(workerID, configuration):
     print "Worker {0} has started.\n".format(workerID)
     #source the user's bash_profile on each node to ensure all environment variables are properly set
-    call(["source", "~/.bash_profile"])
+    call(["./source_bash_profile.bash"])
     wStatus = MPI.Status()
 
     MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
@@ -271,13 +272,6 @@ def mpiVinaWorker(workerID, configuration):
 
     while wStatus.Get_tag() == COMPUTE_TAG:
         print "Worker = {0} : receptor {1} ligand {2} is processing...\n".format(workerID, job_info['receptor'], job_info['ligand'])
-        #insert vina command
-
-        '''configuration = {"vina": None, "vina_config": None, "run_vina": False, "receptors_dir": None, "ligands_dir": None,
-                         "job_name": datetime.now().strftime("%Y-%m-%d_%H%M%S_%f"), "ligand_db_name": None, "output_dir": None,
-                         "clean_temp_files": None, "run_dsx": False, "run_xscore": False, "run_nnscore": False, "run_rfscore": False,
-                         "pdb_potentials_dir": None, "xscore_base_config": None, "networks_dir": None, "dsx": None, "xscore": None,
-                         "nnscore": None, "rfscore": None}'''
 
         receptor = basename(splitext(job_info['receptor'])[0])
         ligand = basename(splitext(job_info['ligand'])[0])
@@ -297,7 +291,7 @@ def mpiVinaWorker(workerID, configuration):
 
         nnscore_out = configuration['nnscore_dir']+"/"+output_base+".nnscore_out"
 
-        rfscore_out = rfscore_dir+"/"+output_base+".rfscore_out"
+        rfscore_out = configuration['rfscore_dir']+"/"+output_base+".rfscore_out"
 
         if configuration['run_vina']:
             commands.run_vina(configuration['vina'], configuration['vina_config'], job_info['receptor'], job_info['ligand'], vina_out)
@@ -325,7 +319,7 @@ def mpiVinaWorker(workerID, configuration):
                 commands.runRFScore(configuration['rfscore'], job_info['receptor'], vina_out, nnscore_out)
 
         MPI.COMM_WORLD.send(None, dest=0, tag=WORK_REQ_TAG)
-        ligandName = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
+        job_info = MPI.COMM_WORLD.recv(source=0, tag=MPI.ANY_TAG, status=wStatus)
 
     if wStatus.Get_tag() == TERMINATE_TAG:
         print "Worker {0} has terminated.\n".format(workerID)
