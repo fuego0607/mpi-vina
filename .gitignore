@@ -40,8 +40,8 @@ bin/rfscore/rf-score-vs
 bin/archives/rfscore.tar.gz
 
 #Ligand and receptor files
-receptors/*.pdbqt
-receptors/*.pdb
-ligands/*.pdbqt
+*.pdbqt
+*.pdb
+*.pdbqt
 
 logs/*
